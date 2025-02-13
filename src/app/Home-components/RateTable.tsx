@@ -1,7 +1,6 @@
 "use client";
 
 import { Button, ScrollArea, Table } from "@mantine/core";
-import { address } from "framer-motion/client";
 
 const elements = [
   { rate: 6, weight: 1, address: "Canada", name: "DHL" },

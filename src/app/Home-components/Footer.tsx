@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Container, Button, Text, Group, Anchor } from '@mantine/core';
+import { Box, Container, Button, Text, Group } from '@mantine/core';
 import { FaFacebookF, FaTwitter, FaInstagram, FaLinkedinIn } from 'react-icons/fa';
 import Link from 'next/link';
 

@@ -270,7 +270,7 @@ const AboutPage = () => {
               marginBottom: "2rem",
             }}
           >
-            If you're ready to start shipping or looking for a reliable partner,
+            If you&apos;re ready to start shipping or looking for a reliable partner,
             we are here to help. Get in touch with us now!
           </Text>
           <Link

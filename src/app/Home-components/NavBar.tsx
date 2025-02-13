@@ -116,7 +116,8 @@ const Navbar = () => {
               <Menu.Dropdown    style={{ zIndex: 1235}}>
                 <Menu.Item
                   onClick={() => {
-                    setMenuOpen(true), setSelectedRole(UserRole.Admin);
+                    setMenuOpen(true)
+                    setSelectedRole(UserRole.Admin)
                   }}
                   leftSection={<BiUser size={14} />}
                 >
@@ -124,7 +125,8 @@ const Navbar = () => {
                 </Menu.Item>
                 <Menu.Item
                   onClick={() => {
-                    setMenuOpen(true), setSelectedRole(UserRole.User);
+                    setMenuOpen(true)
+                    setSelectedRole(UserRole.User)
                   }}
                   leftSection={<BiUserPlus size={16} />}
                 >
@@ -162,7 +164,8 @@ const Navbar = () => {
             <Menu.Dropdown>
               <Menu.Item
                 onClick={() => {
-                  setMenuOpen(true), setSelectedRole(UserRole.Admin);
+                  setMenuOpen(true)
+                  setSelectedRole(UserRole.Admin)
                 }}
                 leftSection={<BiUser size={14} />}
               >
@@ -170,7 +173,8 @@ const Navbar = () => {
               </Menu.Item>
               <Menu.Item
                 onClick={() => {
-                  setMenuOpen(true), setSelectedRole(UserRole.User);
+                  setMenuOpen(true)
+                  setSelectedRole(UserRole.User)
                 }}
                 leftSection={<BiUserPlus size={16} />}
               >

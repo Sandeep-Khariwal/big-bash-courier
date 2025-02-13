@@ -41,7 +41,7 @@ export async function GET(req: Request) {
     });
 
     return Response.json({ user: user, status: 200, token: token });
-  } catch (e: any) {
+  } catch (e) {
     console.log(e);
     return Response.json({ status: 404, error: e });
   }
