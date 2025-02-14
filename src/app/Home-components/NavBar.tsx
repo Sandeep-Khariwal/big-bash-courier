@@ -57,7 +57,7 @@ const Navbar = () => {
         p={10}
       >
         <Stack align="center" gap={0} >
-          <Image src={"/logo.png"} w={50} />
+          <Image src={"/logo.png"} w={50} alt="Not found" />
           <Text fw={600} c={"white"} ff={"Nunito"} fz={18}>
             Big Bash Courier
           </Text>

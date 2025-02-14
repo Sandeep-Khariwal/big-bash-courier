@@ -17,7 +17,7 @@ export async function POST(req: Request) {
 
     const savedUser = await user.save();
     return Response.json({ status: 200, user: savedUser });
-  } catch (e: any) {
+  } catch (e) {
     return Response.json({ status: 404, error: e });
   }
 }
@@ -27,11 +27,11 @@ export async function GET(req: Request) {
     const user = await User.findOne({ email: email });
 
     if (!user) {
-      return { status: 404, message: "User not registered" };
+      return Response.json({ status: 404, message: "User not registered" });
     }
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
-      return { status: 500, message: "Invalid email or password" };
+      return Response.json({ status: 500, message: "Invalid email or password" });
     }
 
     const token = generateAccessToken({

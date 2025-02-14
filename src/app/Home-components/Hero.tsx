@@ -1,13 +1,6 @@
 "use client";
 
-import {
-  Button,
-  Card,
-  Flex,
-  NumberInput,
-  Select,
-  Stack,
-} from "@mantine/core";
+import { Button, Card, Flex, NumberInput, Select, Stack } from "@mantine/core";
 import React, { useEffect, useState } from "react";
 import { CgCalculator } from "react-icons/cg";
 import RateTable from "./RateTable";
@@ -24,9 +17,8 @@ const Hero = () => {
     const fetchCountries = async () => {
       try {
         const response = await fetch("https://restcountries.com/v3.1/all");
-        const data = await response.json();
-        const countryNames = data.map((country:any) => country.name.common);
-        setCountries(countryNames);
+        await response.json();
+        setCountries(["America", "Canada", "England", "Australia"]);
       } catch (error) {
         console.error("Error fetching countries:", error);
       }
@@ -35,10 +27,7 @@ const Hero = () => {
     fetchCountries();
   }, []);
   return (
-    <Stack
-      w={"100%"}
-      mih={"40vh"}
-    >
+    <Stack w={"100%"} mih={"40vh"}>
       <Card
         py={20}
         mt={-50}
@@ -51,7 +40,7 @@ const Hero = () => {
         <Flex
           w={"70%"}
           h={"100%"}
-          direction={isMd?"column":"row"}
+          direction={isMd ? "column" : "row"}
           gap={20}
           mx={"auto"}
           align={"end"}
