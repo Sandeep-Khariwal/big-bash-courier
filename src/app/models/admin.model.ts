@@ -1,3 +1,4 @@
+import { models } from "mongoose";
 import { model, Schema } from "mongoose";
 
 export interface AdminModel {
@@ -27,4 +28,7 @@ const adminSchema = new Schema<AdminModel>({
   },
 });
 
-export default model<AdminModel>("admin", adminSchema);
+// export default model<AdminModel>("admins", adminSchema);
+const AdminModel = models.admins || model<AdminModel>("admins", adminSchema);
+
+export default AdminModel;

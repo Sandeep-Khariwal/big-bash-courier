@@ -1,24 +1,24 @@
 "use client";
 
 import { Button, ScrollArea, Table } from "@mantine/core";
+import { TableData } from "./Hero";
+import {  useState } from "react";
+import BookOrder from "./BookOrder";
 
-const elements = [
-  { rate: 6, weight: 1, address: "Canada", name: "DHL" },
-  { rate: 7, weight: 12, address: "Australia", name: "FEDEX" },
-  { rate: 39, weight: 3, address: "America", name: "UPS" },
-  { rate: 3, weight: 47, address: "Dubai", name: "UPS" },
-];
-
-export default function RateTable() {
-  const rows = elements.map((element) => (
-    <Table.Tr key={element.name}>
-      <Table.Td>{element.name}</Table.Td>
+export default function RateTable(props:{
+  rateTableData:TableData[]
+}) {
+  const [bookParcel , setBookParcel] = useState<TableData | null>(null)
+  const rows = props.rateTableData.map((element:TableData) => (
+    <Table.Tr key={element.company._id}>
+      <Table.Td>{element.company.name}</Table.Td>
       <Table.Td>{element.weight}</Table.Td>
-      <Table.Td>{element.address}</Table.Td>
-      <Table.Td>{element.rate}</Table.Td>
+      <Table.Td>{element.country}</Table.Td>
+      <Table.Td>{element.price}</Table.Td>
       <Table.Td>
         {" "}
         <Button
+        onClick={()=>setBookParcel(element)}
           style={{
             backgroundColor: "#ec4899",
             color: "#fff",
@@ -33,6 +33,7 @@ export default function RateTable() {
   ));
 
   return (
+    <>
     <ScrollArea w={"95%"} mx={"auto"} >
     <Table horizontalSpacing="md" w={"60%"} mx={"auto"} my={10}>
       <Table.Thead bg={"#4da6cf"}>
@@ -56,5 +57,9 @@ export default function RateTable() {
       </Table.Thead>
       <Table.Tbody bg={"white"}>{rows}</Table.Tbody>
     </Table>
-    </ScrollArea>);
+    </ScrollArea>
+    {
+      bookParcel != null && <BookOrder orderData={bookParcel} onClose={()=>setBookParcel(null)} />
+    }
+    </>);
 }

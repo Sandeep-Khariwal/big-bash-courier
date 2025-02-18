@@ -7,55 +7,88 @@ import {
   Button,
   Group,
   Stack,
+  NumberInput,
 } from "@mantine/core";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
-import { useRouter } from "next/navigation";
-import { SaveUserToken } from "@/utility/AddLocalStorage";
-import { useAppDispatch } from "@/lib/hooks";
-import { setUserData } from "@/lib/user/UserSlice";
 
-const UserSignInModal = (props: { opened: boolean; onClose: () => void }) => {
-  const [formData, setFormData] = useState({ email: "", password: "" });
-  const navigation = useRouter()
-   const dispatch = useAppDispatch();
+const CreateNewUserModal = (props: {
+  opened: boolean;
+  onClose: () => void;
+}) => {
+  const [formData, setFormData] = useState<{
+    name: string;
+    email: string;
+    discount: number;
+    password: string;
+  }>({
+    name: "",
+    email: "",
+    discount: 0,
+    password: "",
+  });
 
   const handleSubmit = async () => {
     const response = await axios
-      .put("http://localhost:3000/api/user", {
+      .post("http://localhost:3000/api/user", {
         email: formData.email,
         password: formData.password,
+        name: formData.name,
+        discount: formData.discount,
       })
       .then((response) => response.data);
 
-    if (response.status === 200) {
-      const {user,token} = response
-      toast.success("Logged In!.");
-      dispatch(setUserData(user))
-      SaveUserToken(token)
-      props.onClose()
-      setTimeout(()=>{
-        navigation.push(`/user/${user._id}`)
-      },2000)
-    } else {
-      toast.error(response.message);
+    if (response.status) {
+      toast.success("Form Submited Successfuly!.");
+      setTimeout(() => {
+        props.onClose();
+      }, 2000);
     }
   };
   return (
     <>
       <Toaster />
+
       <Modal
         opened={props.opened}
         onClose={() => props.onClose()}
-        title="User Sign In"
+        title="Create New User"
         size="sm"
         centered
         zIndex={123}
       >
         <Stack gap={12}>
           <TextInput
+            label="Username"
+            placeholder="Enter user name"
+            value={formData.name}
+            name="name"
+            style={{ fontFamily: "Roboto" }}
+            onChange={(e) =>
+              setFormData((prev) => ({
+                ...prev,
+                name: e.target.value,
+              }))
+            }
+            required
+          />
+          <NumberInput
+            label="User Discount"
+            placeholder="Enter user discount"
+            value={formData.discount}
+            name="discount"
+            style={{ fontFamily: "Roboto" }}
+            onChange={(val) =>
+              setFormData((prev) => ({
+                ...prev,
+                discount: Number(val),
+              }))
+            }
+            required
+          />
+          <TextInput
             label="Email"
-            placeholder="Enter your email"
+            placeholder="Enter user email"
             value={formData.email}
             name="email"
             style={{ fontFamily: "Roboto" }}
@@ -70,7 +103,7 @@ const UserSignInModal = (props: { opened: boolean; onClose: () => void }) => {
           <PasswordInput
             label="Password"
             name="password"
-            placeholder="Enter your password"
+            placeholder="create user password"
             value={formData.password}
             onChange={(e) =>
               setFormData((prev) => ({
@@ -102,4 +135,4 @@ const UserSignInModal = (props: { opened: boolean; onClose: () => void }) => {
   );
 };
 
-export default UserSignInModal;
+export default CreateNewUserModal;

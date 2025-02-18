@@ -1,11 +1,12 @@
-import { model, Schema } from "mongoose";
+import { model, models, Schema } from "mongoose";
 
 export interface UserModel {
   _id: string;
   name: string;
   email: string;
   password: string;
-  users:string[];
+  parcel:string[];
+  discount:number
 }
 
 const userSchema = new Schema<UserModel>({
@@ -25,6 +26,17 @@ const userSchema = new Schema<UserModel>({
     type: String,
     default: "",
   },
+  parcel: {
+    type: [String],
+    ref:"parcel",
+    default: [],
+  },
+  discount: {
+    type: Number,
+    default: 0,
+  },
 });
 
-export default model<UserModel>("user", userSchema);
+const UserModel = models.user || model<UserModel>("user", userSchema);
+
+export default UserModel;

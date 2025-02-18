@@ -1,125 +1,333 @@
-import { Button, Flex, Stack, Text } from "@mantine/core";
-import React from "react";
+"use client";
+
+import {
+  Button,
+  Flex,
+  Group,
+  Image,
+  LoadingOverlay,
+  Modal,
+  Stack,
+  Text,
+  TextInput,
+} from "@mantine/core";
+import React, { useEffect, useState } from "react";
 import { IoHomeSharp } from "react-icons/io5";
 import { FaAddressBook } from "react-icons/fa";
 import { FaCalendarAlt } from "react-icons/fa";
 import { IoMdLogOut } from "react-icons/io";
 import { MdAdd } from "react-icons/md";
 import { IoSettings } from "react-icons/io5";
-import Hero from "@/app/Home-components/Hero";
+import Hero from "@/app/Home-components/calculator/Hero";
+import CreateNewUserModal from "@/admin/CreateNewUserModal";
+import { GetUserToken, LogOut } from "@/utility/AddLocalStorage";
+import { useRouter } from "next/navigation";
+import axios from "axios";
+import toast, { Toaster } from "react-hot-toast";
+import AddNewCompanyModal from "@/admin/AddNewCompanyModal";
+import CreateRateForCompanyAndLocation from "@/admin/CreateRateForCompanyAndLocation";
+import AppBookings from "@/admin/bookings/AppBookings";
+import SettingPage from "@/admin/SettingPage";
+import AppUsers from "@/admin/user/AppUsers";
+import { useAppDispatch } from "@/lib/hooks";
+import { setAdminData } from "@/lib/admin/AdminSlice";
+
+enum SideTabs {
+  HOME = "home",
+  BOOKING = "booking",
+  USERS = "users",
+  EDITRATE = "edit rate",
+  SETTINGS = "settings",
+}
 
 const Admin = () => {
+  const [openAddUserModal, setOpenAddUserModal] = useState<boolean>(false);
+  const [openAddCountryModal, setOpenAddCountryModal] =
+    useState<boolean>(false);
+  const [openAddCompanyModal, setOpenAddCompanyModal] =
+    useState<boolean>(false);
+  const [countryName, setCountryName] = useState<string>();
+  const navigation = useRouter();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [openAddRateModal, setOpenAddRateModal] = useState<boolean>(false);
+  const [createdCompany, setCreatedCompany] = useState<{
+    _id: string;
+    name: string;
+  }>({ _id: "", name: "" });
+
+  const [activeTab, setActiveTab] = useState<SideTabs>(SideTabs.HOME);
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    getUserByToken();
+  }, []);
+
+  const getUserByToken = async () => {
+    const response = await axios
+      .get("http://localhost:3000/api/user", {
+        headers: {
+          authorization: `Bearer ${GetUserToken()}`,
+        },
+      })
+      .then((response) => response.data);
+
+    if (response.status === 200) {
+      const { data } = response;
+      dispatch(setAdminData(data));
+    }
+  };
+  const createCountry = async () => {
+    setIsLoading(true);
+    const response = await axios
+      .post("http://localhost:3000/api/country", { name: countryName })
+      .then((response) => response.data);
+
+    if (response.status) {
+      setIsLoading(false);
+      toast.success("Country created!");
+      setOpenAddCountryModal(false);
+    } else {
+      setIsLoading(false);
+      toast.error("error while Country created!");
+    }
+  };
   return (
-    <Flex w={"100%"} mih={"100vh"}>
-      <Stack 
-      w={"10%"} 
-      bg={"linear-gradient(to top, #4da6cf, #ec4899)"} 
-      gap={20} pt={20} align="center">
-        <Flex direction={"column"} h={"100%"} align={"center"} justify={"space-between"} >
-          <Text>Logo</Text>
-          <Stack h={"60%"}>
-            <Flex align={"center"} gap={10} mt={20}>
-              <IoHomeSharp color="white" size={20} />
-              <Text
-                fz={20}
-                ff={"Roboto"}
-                fw={600}
-                c={"white"}
-                style={{ cursor: "pointer" }}
+    <>
+      <LoadingOverlay visible={isLoading} />
+      <Toaster />
+      <Flex w={"100%"} mih={"100vh"}>
+        <Stack
+          w={"10%"}
+          bg={"linear-gradient(to top, #4da6cf, #ec4899)"}
+          gap={20}
+          pt={20}
+          align="center"
+        >
+          <Flex
+            direction={"column"}
+            h={"100%"}
+            align={"center"}
+            justify={"space-between"}
+          >
+            <Image src={"/logo.png"} w={50} alt="Not found" />
+            <Stack h={"60%"}>
+              <Flex
+                onClick={() => setActiveTab(SideTabs.HOME)}
+                align={"center"}
+                gap={10}
+                mt={20}
+                style={{
+                  border:
+                    activeTab === SideTabs.HOME ? "1px solid white" : "none",
+                }}
+                p={5}
               >
-                Home
-              </Text>
+                <IoHomeSharp color="white" size={20} />
+                <Text
+                  fz={20}
+                  ff={"Roboto"}
+                  fw={600}
+                  c={"white"}
+                  style={{ cursor: "pointer" }}
+                >
+                  Home
+                </Text>
+              </Flex>
+              <Flex
+                onClick={() => setActiveTab(SideTabs.BOOKING)}
+                align={"center"}
+                gap={10}
+                mt={20}
+                style={{
+                  border:
+                    activeTab === SideTabs.BOOKING ? "1px solid white" : "none",
+                }}
+                p={5}
+              >
+                <FaCalendarAlt color="white" size={20} />
+                <Text
+                  fz={20}
+                  ff={"Roboto"}
+                  fw={600}
+                  c={"white"}
+                  style={{ cursor: "pointer" }}
+                >
+                  Booking
+                </Text>
+              </Flex>
+              <Flex
+                onClick={() => setActiveTab(SideTabs.USERS)}
+                align={"center"}
+                gap={10}
+                mt={20}
+                style={{
+                  border:
+                    activeTab === SideTabs.USERS ? "1px solid white" : "none",
+                }}
+                p={5}
+              >
+                <FaAddressBook color="white" size={20} />
+                <Text
+                  fz={20}
+                  ff={"Roboto"}
+                  fw={600}
+                  c={"white"}
+                  style={{ cursor: "pointer" }}
+                >
+                  Users
+                </Text>
+              </Flex>
+            </Stack>
+            <Flex
+              onClick={() => setActiveTab(SideTabs.SETTINGS)}
+              h={"30%"}
+              align={"end"}
+              justify={"center"}
+              pb={20}
+            >
+              <Flex align={"center"} gap={10}>
+                <IoSettings
+                  color="white"
+                  size={20}
+                  style={{ cursor: "pointer" }}
+                />
+                <Text
+                  fz={20}
+                  ff={"Roboto"}
+                  fw={600}
+                  c={"white"}
+                  style={{ cursor: "pointer" }}
+                >
+                  settings
+                </Text>
+              </Flex>
             </Flex>
-            <Flex align={"center"} gap={10} mt={20}>
-              <FaCalendarAlt color="white" size={20} />
-              <Text
-                fz={20}
-                ff={"Roboto"}
-                fw={600}
-                c={"white"}
-                style={{ cursor: "pointer" }}
-              >
-                Booking
-              </Text>
-            </Flex>
-            <Flex align={"center"} gap={10} mt={20}>
-              <FaAddressBook color="white" size={20} />
-              <Text
-                fz={20}
-                ff={"Roboto"}
-                fw={600}
-                c={"white"}
-                style={{ cursor: "pointer" }}
-              >
-                Users
-              </Text>
-            </Flex>
-          </Stack>
-          <Flex h={"30%"} align={"end"} justify={"center"} p={20} >
-           <Flex align={"center"} gap={10} >
-           <IoSettings color="white" size={20} style={{ cursor: "pointer" }} />
-            <Text
-                fz={20}
-                ff={"Roboto"}
-                fw={600}
-                c={"white"}
-                style={{ cursor: "pointer" }}
-              >
-                settings
-              </Text>
-           </Flex>
           </Flex>
-        </Flex>
-      </Stack>
-      <Stack w={"90%"} >
+        </Stack>
+        <Stack w={"90%"}>
+          <Flex
+            w={"100%"}
+            bg={"linear-gradient(to left, #4da6cf, #ec4899)"}
+            align={"center"}
+            justify={"space-between"}
+            gap={20}
+            p={15}
+          >
+            <Flex align={"center"} gap={20}>
+              <Button
+                variant={"subtle"}
+                c={"white"}
+                ff={"Poppins"}
+                onClick={() => setOpenAddCountryModal(true)}
+              >
+                {" "}
+                <MdAdd color="white" size={20} /> Country{" "}
+              </Button>
+              <Button
+                variant={"subtle"}
+                ff={"Poppins"}
+                c={"white"}
+                onClick={() => setOpenAddUserModal(true)}
+              >
+                {" "}
+                <MdAdd color="white" size={20} /> User
+              </Button>
+              <Button
+                variant={"subtle"}
+                ff={"Poppins"}
+                c={"white"}
+                onClick={() => setOpenAddCompanyModal(true)}
+              >
+                {" "}
+                <MdAdd color="white" size={20} /> Company
+              </Button>
+            </Flex>
+            <Flex>
+              <Text fw={700} ff={"Roboto"} c={"#fff"} fz={24} ta={"center"}>
+                Big Bash Courier
+              </Text>
+            </Flex>
+            <Flex px={20}>
+              <IoMdLogOut
+                onClick={() => {
+                  LogOut();
+                  navigation.push("/");
+                }}
+                size={20}
+                color="white"
+                style={{ cursor: "pointer" }}
+              />
+            </Flex>
+          </Flex>
+          <Stack>
+            {activeTab === SideTabs.HOME && <Hero isTopMargin={false} />}
+            {activeTab === SideTabs.BOOKING && <AppBookings />}
+            {activeTab === SideTabs.USERS && <AppUsers />}
+            {activeTab === SideTabs.SETTINGS && <SettingPage />}
+          </Stack>
+        </Stack>
+      </Flex>
+
+      {openAddUserModal && (
+        <CreateNewUserModal
+          opened={openAddUserModal}
+          onClose={() => setOpenAddUserModal(false)}
+        />
+      )}
+      <Modal
+        opened={openAddCountryModal}
+        title={"Create Country"}
+        onClose={() => setOpenAddCountryModal(false)}
+        centered
+      >
         <Flex
           w={"100%"}
-          bg={"linear-gradient(to left, #4da6cf, #ec4899)"}
           align={"center"}
-          justify={"space-between"}
+          justify={"center"}
           gap={20}
-          p={15}
+          direction={"column"}
         >
-          <Flex align={"center"} gap={20}>
+          <TextInput
+            w={"80%"}
+            label="Country Name"
+            placeholder="Enter country name"
+            value={countryName}
+            style={{ fontFamily: "Roboto" }}
+            onChange={(e) => setCountryName(e.target.value)}
+            required
+          />
+          <Group p="right" style={{ marginTop: "12px" }}>
             <Button
-              variant={"subtle"}
-              c={"white"}
-              ff={"Poppins"}
+              type="submit"
+              onClick={createCountry}
+              style={{
+                backgroundColor: "#ec4899",
+                color: "white",
+                fontFamily: "Poppins, Roboto, Nunito",
+                borderRadius: "8px",
+                padding: "10px 20px",
+              }}
             >
-              {" "}
-              <MdAdd color="white" size={20} /> Country{" "}
+              Create
             </Button>
-            <Button
-              variant={"subtle"}
-              ff={"Poppins"}
-              c={"white"}
-            >
-              {" "}
-              <MdAdd color="white" size={20} /> User
-            </Button>
-            <Button
-              variant={"subtle"}
-              ff={"Poppins"}
-              c={"white"}
-            >
-              {" "}
-              <MdAdd color="white" size={20} /> Company
-            </Button>
-          </Flex>
-          <Flex>
-            <Text fw={700} ff={"Roboto"} c={"#fff"} fz={24} ta={"center"}>
-              Big Bash Courier
-            </Text>
-          </Flex>
-          <Flex px={20}>
-            <IoMdLogOut size={20} color="white" style={{ cursor: "pointer" }} />
-          </Flex>
+          </Group>
         </Flex>
-        <Stack>
-          <Hero/>
-        </Stack>
-      </Stack>
-    </Flex>
+      </Modal>
+      {openAddCompanyModal && (
+        <AddNewCompanyModal
+          openAddCompanyModal={openAddCompanyModal}
+          setOpenAddCompanyModal={setOpenAddCompanyModal}
+          setOpenAddRateModal={setOpenAddRateModal}
+          setCreatedCompany={setCreatedCompany}
+        />
+      )}
+      {openAddRateModal && (
+        <CreateRateForCompanyAndLocation
+          open={openAddRateModal}
+          createdCompany={createdCompany}
+          setOpenAddRateModal={setOpenAddRateModal}
+        />
+      )}
+    </>
   );
 };
 

@@ -3,7 +3,7 @@
 import React from "react";
 import { Image, Flex, Text, Container } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
-import TypewriterClass  from "typewriter-effect";
+import TypewriterClass from "typewriter-effect";
 
 const BackgroundWithHeading = () => {
   const imageUrl = "/parcel1.png";
@@ -52,23 +52,39 @@ const BackgroundWithHeading = () => {
           top: "50%",
           left: "50%",
           transform: "translate(-50%, -50%)",
-          zIndex: 2, 
+          zIndex: 2,
           color: "white",
           textAlign: "center",
         }}
       >
-        <Text fw={700} ff={"Roboto"} c={"#4da6cf"} style={{whiteSpace:"nowrap"}} fz={isMd?30:50}>
-        <TypewriterClass
+        <Flex gap={10} fw={700} ff={"Roboto"} c={"#ec4899"} fz={isMd ? 30 : 50}>
+          <Text
+            fw={700}
+            ff={"Roboto"}
+            c={"#4da6cf"}
+            style={{ whiteSpace: "nowrap" }}
+            fz={isMd ? 30 : 50}
+          >
+            {" "}
+            Big Bash{" "}
+          </Text>
+
+          <TypewriterClass
             options={{
-              strings: ["  Big Bash Courier!", " world wide courier!"],
+              strings: [
+                "  International Courier!",
+                "  Domestic Courier!",
+                "  Cargo Courier!",
+                " World wide courier!",
+              ],
               autoStart: true,
               loop: true,
             }}
           />
-         
-        </Text>
-        <Text fw={600} ff={"Nunito"} c={"#FFFFFF"} fz={isMd?18:24}>
-          International curier services
+        </Flex>
+
+        <Text fw={600} ff={"Nunito"} c={"#FFFFFF"} fz={isMd ? 18 : 24}>
+          International, Domestic and cargo courier services
         </Text>
       </Container>
     </Flex>

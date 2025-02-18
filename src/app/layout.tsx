@@ -2,12 +2,12 @@ import type { Metadata } from "next";
 import "./globals.css";
 import "@mantine/core/styles.css";
 import { MantineProvider } from "@mantine/core";
-
+import StoreProvider from "@/lib/StoreProvider";
 
 export const metadata: Metadata = {
   title: {
-    default:"big bash courier service",
-    template:"%s"
+    default: "big bash courier service",
+    template: "%s",
   },
   description: "Best - big bash courier services",
   icons: {
@@ -29,9 +29,11 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  console.log("first amount");
+  
   return (
     <html lang="en">
-            <head>
+      <head>
         {/* Roboto font */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" />
@@ -56,11 +58,10 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body >
+      <body>
         <MantineProvider>
-         
-          {children}
-          </MantineProvider>
+          <StoreProvider>{children}</StoreProvider>
+        </MantineProvider>
       </body>
     </html>
   );
