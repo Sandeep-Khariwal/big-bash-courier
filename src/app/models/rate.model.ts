@@ -1,9 +1,9 @@
 import { model, models, Schema } from "mongoose";
 
-interface RateInterface {
+export interface RateInterface {
   company: string;
   country: string;
-  rates: { weight: Number; price: Number }[];
+  rates: { weight: number; price: number }[];
 }
 
 const rateSchema = new Schema<RateInterface>({

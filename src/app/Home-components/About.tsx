@@ -14,7 +14,7 @@ const AboutPage = () => {
   const isMd = useMediaQuery(`(max-width: 968px)`);
   const slides = images.map((url) => (
     <Carousel.Slide key={url}>
-      <Image src={url} width={"100%"} height={isMd ? 250 : 500} />
+      <Image src={url} width={"100%"} alt="Not found" height={isMd ? 250 : 500} />
     </Carousel.Slide>
   ));
   return (

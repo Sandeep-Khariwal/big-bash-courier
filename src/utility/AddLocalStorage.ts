@@ -14,6 +14,8 @@ export enum LocalStorageKey {
         try {
           return storedValue;
         } catch (error) {
+          console.log(error);
+          
           return storedValue;
         }
       }
@@ -22,12 +24,10 @@ export enum LocalStorageKey {
   }
   
   export function GetUserToken() {
-  
-    const localStorageValue = GetValueFromLocalStorage<string>(
-      LocalStorageKey.Token
-    );
-    return localStorageValue!!;
+    const localStorageValue = GetValueFromLocalStorage<string>(LocalStorageKey.Token);
+    return localStorageValue ?? ""; 
   }
+  
   
   
   

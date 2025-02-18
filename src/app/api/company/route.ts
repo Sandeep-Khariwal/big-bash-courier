@@ -15,7 +15,7 @@ export async function POST(req: Request) {
   }
 }
 
-export async function GET(req: Request) {
+export async function GET() {
   try {
     dbConnect();
     const companies = await Company.find({});

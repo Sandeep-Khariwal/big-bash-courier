@@ -36,7 +36,7 @@ export function validateToken(req: Request) {
     return decoded;
   } catch (err) {
     return NextResponse.json(
-      { message: "Invalid or expired token" },
+      { message: "Invalid or expired token",error:err },
       { status: 401 }
     );
   }

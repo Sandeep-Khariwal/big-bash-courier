@@ -29,7 +29,7 @@ export async function POST(req: Request) {
       for (const { weight, price } of weightPrice) {
         // Check if the weight already exists in the rates for this country
         const existingWeight = existingRate.rates.find(
-          (r: any) => r.weight === weight
+          (r:{ weight: number; price: number }) => r.weight === weight
         );
         if (existingWeight) {
           // Update price for existing weight
@@ -93,7 +93,7 @@ export async function PUT(req: Request) {
       });
     }
 
-    let resultRates = [];
+    const resultRates = [];
 
     // Loop through each company and find the rate for the selected weight
     for (const rate of rates.rates) {
@@ -110,7 +110,7 @@ export async function PUT(req: Request) {
 
     // If weight is greater than 31kg, cap it at 31kg
     if (weight > 31) {
-      const maxRate = rates.rates.find((r: any) => r.weight === 31);
+      const maxRate = rates.rates.find((r: { weight: number; price: number }) => r.weight === 31);
 
       // Check if maxRate is undefined and handle accordingly
       if (maxRate) {
@@ -152,6 +152,7 @@ export async function PATCH(req:Request) {
     return Response.json({
       status: 500,
       message: "Internal server error",
+      error
     });
   }
 }

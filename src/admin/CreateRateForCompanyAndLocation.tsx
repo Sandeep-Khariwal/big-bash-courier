@@ -21,8 +21,8 @@ const CreateRateForCompanyAndLocation = (props: {
   const [selectedCountries, setSelectedCountries] = useState<string>();
   const [rates, setRates] = useState<
     {
-      weight: Number;
-      price: Number;
+      weight: number;
+      price: number;
     }[]
   >([
     {
@@ -33,7 +33,7 @@ const CreateRateForCompanyAndLocation = (props: {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const handleAddInstallment = () => {
-    let index = rates.length + 1;
+    const index = rates.length + 1;
     setRates([
       ...rates,
       {
@@ -54,7 +54,7 @@ const CreateRateForCompanyAndLocation = (props: {
 
       if (response.status) {
         setIsLoading(false);
-        const countries = response.countries.map((c: any) => c.name) || [];
+        const countries = response.countries.map((c:{_id:string,name:string}) => c.name) || [];
         setCountries(countries);
       }
     };

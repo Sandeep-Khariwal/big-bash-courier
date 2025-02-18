@@ -75,7 +75,7 @@ const Booking = () => {
         <Stack>
           {allParcel.length > 0 ? (
             allParcel.map((parcel: ParcelModel, index) => (
-              <ParcelCard parcel={parcel} index={index} />
+              <ParcelCard key={parcel._id} parcel={parcel} index={index} />
             ))
           ) : (
             <Text fz={30} fw={700} ta="center" c="#4da6cf" mb="md">

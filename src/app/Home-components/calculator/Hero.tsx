@@ -30,7 +30,6 @@ export interface TableData {
 const Hero = (props: { isTopMargin: boolean }) => {
   const isMd = useMediaQuery(`(max-width: 968px)`);
   const user = useAppSelector((state) => state.user);
-  const admin = useAppSelector((state) => state.admin);
 
   const [countries, setCountries] = useState<string[]>([]);
   const [selectedCountry, setSelectedCountry] = useState<string>();
@@ -49,7 +48,7 @@ const Hero = (props: { isTopMargin: boolean }) => {
 
       if (response.status === 200) {
         setIsLoading(false);
-        const countries = response.countries.map((c: any) => c.name) || [];
+        const countries = response.countries.map((c: {_id:string,name:string}) => c.name) || [];
         setCountries(countries);
       } else {
         console.log(response);

@@ -68,7 +68,7 @@ export async function GET(req: Request) {
 }
 
 // get user parcells
-export async function PATCH(req: Request) {
+export async function PATCH() {
   try {
     // connect db
     dbConnect();

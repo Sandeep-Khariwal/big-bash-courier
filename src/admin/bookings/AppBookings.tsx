@@ -66,7 +66,7 @@ const AppBookings = () => {
       >
         <Stack>
           {allParcel.map((parcel: ParcelModel, index) => (
-            <ParcelCard parcel={parcel} index={index} />
+            <ParcelCard key={parcel._id} parcel={parcel} index={index} />
           ))}
         </Stack>
       </ScrollArea>

@@ -1,7 +1,6 @@
 import dbConnect from "@/app/lib/dbConnect";
 import Parcel from "@/app/models/parcel.model";
 import User from "@/app/models/user.model";
-import { NextRequest } from "next/server";
 
 // update parcel id in user
 export async function PUT(req: Request) {
@@ -42,11 +41,12 @@ export async function PATCH(req: Request) {
     return Response.json({ status: 404, error });
   }
 }
-export async function GET(
-  { params }: { params: { userId: string } }
+export async function GET(_: Request,
+  context: { params: { userId: string } } 
 ) {
   try {
-    const allParcels = await Parcel.find({ userId: params.userId });
+    const { userId } = context.params;
+    const allParcels = await Parcel.find({ userId: userId });
     return Response.json({ status: 200, allParcels });
   } catch (error) {
     return Response.json({ status: 404, error });

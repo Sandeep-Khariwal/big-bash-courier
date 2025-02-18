@@ -82,7 +82,7 @@ const AppUsers = () => {
           >
             <Stack>
               {users.map((d: UserData) => (
-                <UserCard user={d} setSelectedUserId={setSelectedUserId} />
+                <UserCard key={d._id} user={d} setSelectedUserId={setSelectedUserId} />
               ))}
             </Stack>
           </ScrollArea>
@@ -115,7 +115,7 @@ const AppUsers = () => {
           >
             <Stack>
               {allParcel.map((parcel: ParcelModel, index) => (
-                <ParcelCard parcel={parcel} index={index} />
+                <ParcelCard key={parcel._id} parcel={parcel} index={index} />
               ))}
             </Stack>
           </ScrollArea>

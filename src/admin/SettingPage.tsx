@@ -19,7 +19,7 @@ import toast, { Toaster } from "react-hot-toast";
 interface RateInterface {
   company: string;
   country: string;
-  rates: { weight: Number; price: Number }[];
+  rates: { weight: number; price: number }[];
 }
 
 const SettingPage = () => {
@@ -39,8 +39,8 @@ const SettingPage = () => {
   }, []);
   const [rates, setRates] = useState<
     {
-      weight: Number;
-      price: Number;
+      weight: number;
+      price: number;
     }[]
   >([
     {
@@ -57,7 +57,7 @@ const SettingPage = () => {
     if (response.status === 200) {
       setIsLoading(false);
       const companies =
-        response.companies.map((c: any) => {
+        response.companies.map((c: {_id:string,name:string}) => {
           return {
             _id: c._id,
             name: c.name,
@@ -77,7 +77,7 @@ const SettingPage = () => {
 
     if (response.status === 200) {
       setIsLoading(false);
-      const countries = response.countries.map((c: any) => c.name) || [];
+      const countries = response.countries.map((c: {_id:string,name:string}) => c.name) || [];
       setCountries(countries);
     } else {
       console.log(response);
@@ -114,7 +114,7 @@ const SettingPage = () => {
   };
 
   const handleAddInstallment = () => {
-    let index = rates.length + 1;
+    const index = rates.length + 1;
     setRates([
       ...rates,
       {
