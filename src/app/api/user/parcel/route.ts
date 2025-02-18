@@ -41,14 +41,4 @@ export async function PATCH(req: Request) {
     return Response.json({ status: 404, error });
   }
 }
-export async function GET(_: Request,
-  context: { params: { userId: string } } 
-) {
-  try {
-    const { userId } = context.params;
-    const allParcels = await Parcel.find({ userId: userId });
-    return Response.json({ status: 200, allParcels });
-  } catch (error) {
-    return Response.json({ status: 404, error });
-  }
-}
+

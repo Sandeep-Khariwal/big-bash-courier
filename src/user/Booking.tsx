@@ -39,7 +39,7 @@ const Booking = () => {
   const getAllParcel = async () => {
     setIsLoading(true);
     const response = await axios
-      .get("http://localhost:3000/api/parcel", {
+      .get("http://localhost:3000/api/user/parcel", {
         params: {
           userId: user._id,
         },
