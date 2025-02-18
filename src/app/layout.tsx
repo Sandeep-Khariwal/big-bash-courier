@@ -29,8 +29,6 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  console.log("first amount");
-  
   return (
     <html lang="en">
       <head>

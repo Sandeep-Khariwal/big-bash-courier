@@ -40,11 +40,7 @@ const Booking = () => {
   const getAllParcel = async () => {
     setIsLoading(true);
     const response = await axios
-      .get(`${URL}/api/user/parcel`, {
-        params: {
-          userId: user._id,
-        },
-      })
+      .get(`${URL}/api/user/parcel/${user._id}`)
       .then((response) => response.data);
 
     if (response.status === 200) {

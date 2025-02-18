@@ -32,7 +32,6 @@ export async function PUT(req: Request) {
 }
 export async function PATCH(req: Request) {
   try {
-    // connect db
     dbConnect();
     const { parcelIds } = await req.json();
     const allParcels = await Parcel.find({ _id: { $in: parcelIds } });
@@ -41,4 +40,3 @@ export async function PATCH(req: Request) {
     return Response.json({ status: 404, error });
   }
 }
-

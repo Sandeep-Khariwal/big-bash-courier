@@ -8,7 +8,7 @@ import { IoMdLogOut } from "react-icons/io";
 import Hero from "@/app/Home-components/calculator/Hero";
 import { GetUserToken, LogOut } from "@/utility/AddLocalStorage";
 import { useRouter } from "next/navigation";
-import { useAppDispatch } from "@/lib/hooks";
+import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import axios from "axios";
 import { setUserData } from "@/lib/user/UserSlice";
 import Booking from "@/user/Booking";
@@ -23,6 +23,7 @@ const User = () => {
   const navigation = useRouter();
   const [activeTab, setActiveTab] = useState<SideTabs>(SideTabs.HOME);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+   const user = useAppSelector((state) => state.user);
 
   const dispatch = useAppDispatch();
   useEffect(() => {
@@ -122,7 +123,7 @@ const User = () => {
           >
             <Flex>
               <Text fw={700} ff={"Roboto"} c={"#fff"} fz={24} ta={"center"}>
-                Hy, sandeep khariwal
+                Hy, {user.name}
               </Text>
             </Flex>
             <Flex px={20}>
