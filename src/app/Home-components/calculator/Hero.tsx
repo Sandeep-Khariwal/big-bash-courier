@@ -17,6 +17,7 @@ import { useMediaQuery } from "@mantine/hooks";
 import axios from "axios";
 import { useAppSelector } from "@/lib/hooks";
 import toast, { Toaster } from "react-hot-toast";
+import { URL } from "@/lib/ApiHelper";
 
 export interface TableData {
   company: {
@@ -43,7 +44,7 @@ const Hero = (props: { isTopMargin: boolean }) => {
     const fetchCountries = async () => {
       setIsLoading(true);
       const response = await axios
-        .get("http://localhost:3000/api/country")
+        .get(`${URL}/api/country`)
         .then((response) => response.data);
 
       if (response.status === 200) {
@@ -69,7 +70,7 @@ const Hero = (props: { isTopMargin: boolean }) => {
     }
     setIsLoading(true);
     const response = await axios
-      .put("http://localhost:3000/api/rate", {
+      .put(`${URL}/api/rate`, {
         country: selectedCountry,
         weight: selectedWeight,
       })

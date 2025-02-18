@@ -1,5 +1,6 @@
 "use client";
 
+import { URL } from "@/lib/ApiHelper";
 import {
   Button,
   Flex,
@@ -30,7 +31,7 @@ const AddNewCompanyModal = (props: {
   const createCompany = async () => {
     setIsLoading(true);
     const response = await axios
-      .post("http://localhost:3000/api/company", { name: companyName })
+      .post(`${URL}/api/company`, { name: companyName })
       .then((response) => response.data);
 
     if (response.status === 200) {

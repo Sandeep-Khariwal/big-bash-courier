@@ -14,6 +14,7 @@ import { SaveUserToken } from "@/utility/AddLocalStorage";
 import { useRouter } from "next/navigation";
 import { useAppDispatch } from "@/lib/hooks";
 import { setAdminData } from "@/lib/admin/AdminSlice";
+import { URL } from "@/lib/ApiHelper";
 
 const SignInModal = (props: { opened: boolean; onClose: () => void }) => {
   const [formData, setFormData] = useState({ email: "", password: "" });
@@ -21,7 +22,7 @@ const SignInModal = (props: { opened: boolean; onClose: () => void }) => {
   const navigation = useRouter();
   const handleSubmit = async () => {
     const response = await axios
-      .put("http://localhost:3000/api/admin", {
+      .put(`${URL}/api/admin`, {
         email: formData.email,
         password: formData.password,
       })

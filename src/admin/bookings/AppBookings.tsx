@@ -24,6 +24,7 @@ export interface ParcelModel {
 }
 
 import toast, { Toaster } from "react-hot-toast";
+import { URL } from "@/lib/ApiHelper";
 
 const AppBookings = () => {
   const [allParcel,setAllParcel] = useState<ParcelModel[]>([])
@@ -35,7 +36,7 @@ const AppBookings = () => {
   const getAllParcel = async () => {
     setIsLoading(true);
     const response = await axios
-      .get("http://localhost:3000/api/parcel")
+      .get(`${URL}/api/parcel`)
       .then((response) => response.data);
 
     if (response.status === 200) {

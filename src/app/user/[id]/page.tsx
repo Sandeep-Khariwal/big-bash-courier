@@ -12,6 +12,7 @@ import { useAppDispatch } from "@/lib/hooks";
 import axios from "axios";
 import { setUserData } from "@/lib/user/UserSlice";
 import Booking from "@/user/Booking";
+import { URL } from "@/lib/ApiHelper";
 
 enum SideTabs {
   HOME = "home",
@@ -31,7 +32,7 @@ const User = () => {
   const getUserByToken = async () => {
     setIsLoading(true)
     const response = await axios
-      .get("http://localhost:3000/api/user", {
+      .get(`${URL}/api/user`, {
         headers: {
           authorization: `Bearer ${GetUserToken()}`,
         },

@@ -15,6 +15,7 @@ import { useRouter } from "next/navigation";
 import { useAppDispatch } from "@/lib/hooks";
 import { setUserData } from "@/lib/user/UserSlice";
 import { setAdminData } from "@/lib/admin/AdminSlice";
+import { URL } from "@/lib/ApiHelper";
 
 export default function Home() {
   const dispatch = useAppDispatch();
@@ -25,7 +26,7 @@ export default function Home() {
 
   const getUserByToken = async () => {
     const response = await axios
-      .get("http://localhost:3000/api/user", {
+      .get(`${URL}/api/user`, {
         headers: {
           authorization: `Bearer ${GetUserToken()}`,
         },

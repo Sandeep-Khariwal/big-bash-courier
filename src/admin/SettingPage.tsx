@@ -15,6 +15,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { BiTrash } from "react-icons/bi";
 import toast, { Toaster } from "react-hot-toast";
+import { URL } from "@/lib/ApiHelper";
 
 interface RateInterface {
   company: string;
@@ -51,7 +52,7 @@ const SettingPage = () => {
   const fetchCompanies = async () => {
     setIsLoading(true);
     const response = await axios
-      .get("http://localhost:3000/api/company")
+      .get(`${URL}/api/company`)
       .then((response) => response.data);
 
     if (response.status === 200) {
@@ -72,7 +73,7 @@ const SettingPage = () => {
   const fetchCountries = async () => {
     setIsLoading(true);
     const response = await axios
-      .get("http://localhost:3000/api/country")
+      .get(`${URL}/api/country`)
       .then((response) => response.data);
 
     if (response.status === 200) {
@@ -94,7 +95,7 @@ const SettingPage = () => {
     setIsLoading(true);
 
     const response = await axios
-      .patch("http://localhost:3000/api/rate", {
+      .patch(`${URL}/api/rate`, {
         companyId: selectedCompany,
         country: selectedCountry,
       })
@@ -142,7 +143,7 @@ const SettingPage = () => {
   const saveDetails = async () => {
     setIsLoading(true);
     const response = await axios
-      .post("http://localhost:3000/api/rate", {
+      .post(`${URL}/api/rate`, {
         companyId: rate?.company,
         country: selectedCountry,
         weightPrice: rates,

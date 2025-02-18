@@ -25,6 +25,7 @@ export interface ParcelModel {
 import toast, { Toaster } from "react-hot-toast";
 import ParcelCard from "@/admin/bookings/ParcelCard";
 import { useAppSelector } from "@/lib/hooks";
+import { URL } from "@/lib/ApiHelper";
 
 const Booking = () => {
   const [allParcel, setAllParcel] = useState<ParcelModel[]>([]);
@@ -39,7 +40,7 @@ const Booking = () => {
   const getAllParcel = async () => {
     setIsLoading(true);
     const response = await axios
-      .get("http://localhost:3000/api/user/parcel", {
+      .get(`${URL}/api/user/parcel`, {
         params: {
           userId: user._id,
         },

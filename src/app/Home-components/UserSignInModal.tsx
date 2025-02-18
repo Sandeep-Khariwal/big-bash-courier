@@ -14,6 +14,7 @@ import { useRouter } from "next/navigation";
 import { SaveUserToken } from "@/utility/AddLocalStorage";
 import { useAppDispatch } from "@/lib/hooks";
 import { setUserData } from "@/lib/user/UserSlice";
+import { URL } from "@/lib/ApiHelper";
 
 const UserSignInModal = (props: { opened: boolean; onClose: () => void }) => {
   const [formData, setFormData] = useState({ email: "", password: "" });
@@ -22,7 +23,7 @@ const UserSignInModal = (props: { opened: boolean; onClose: () => void }) => {
 
   const handleSubmit = async () => {
     const response = await axios
-      .put("http://localhost:3000/api/user", {
+      .put(`${URL}/api/user`, {
         email: formData.email,
         password: formData.password,
       })

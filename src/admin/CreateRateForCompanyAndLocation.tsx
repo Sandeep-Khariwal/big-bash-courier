@@ -12,6 +12,7 @@ import axios from "axios";
 import React, { SetStateAction, useEffect, useState } from "react";
 import { BiTrash } from "react-icons/bi";
 import toast, { Toaster } from "react-hot-toast";
+import { URL } from "@/lib/ApiHelper";
 
 const CreateRateForCompanyAndLocation = (props: {
   open: boolean;
@@ -49,7 +50,7 @@ const CreateRateForCompanyAndLocation = (props: {
     const fetchCountries = async () => {
       setIsLoading(true);
       const response = await axios
-        .get("http://localhost:3000/api/country")
+        .get(`${URL}/api/country`)
         .then((response) => response.data);
 
       if (response.status) {
@@ -79,7 +80,7 @@ const CreateRateForCompanyAndLocation = (props: {
   const addRatesInCompany = async () => {
     setIsLoading(true);
     const response = await axios
-      .post("http://localhost:3000/api/rate", {
+      .post(`${URL}/api/rate`, {
         companyId: props.createdCompany._id,
         country: selectedCountries,
         weightPrice: rates,

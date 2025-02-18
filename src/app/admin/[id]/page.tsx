@@ -31,6 +31,7 @@ import SettingPage from "@/admin/SettingPage";
 import AppUsers from "@/admin/user/AppUsers";
 import { useAppDispatch } from "@/lib/hooks";
 import { setAdminData } from "@/lib/admin/AdminSlice";
+import { URL } from "@/lib/ApiHelper";
 
 enum SideTabs {
   HOME = "home",
@@ -63,7 +64,7 @@ const Admin = () => {
 
   const getUserByToken = async () => {
     const response = await axios
-      .get("http://localhost:3000/api/user", {
+      .get(`${URL}/api/user`, {
         headers: {
           authorization: `Bearer ${GetUserToken()}`,
         },
@@ -78,7 +79,7 @@ const Admin = () => {
   const createCountry = async () => {
     setIsLoading(true);
     const response = await axios
-      .post("http://localhost:3000/api/country", { name: countryName })
+      .post(`${URL}/api/country`, { name: countryName })
       .then((response) => response.data);
 
     if (response.status) {

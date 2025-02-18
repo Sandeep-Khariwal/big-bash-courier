@@ -13,6 +13,7 @@ import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
 import { BiRupee } from "react-icons/bi";
 import { useAppSelector } from "@/lib/hooks";
+import { URL } from "@/lib/ApiHelper";
 
 const BookOrder = (props: { orderData: TableData; onClose: () => void }) => {
   const [address, setAddress] = useState<string>("");
@@ -29,7 +30,7 @@ const BookOrder = (props: { orderData: TableData; onClose: () => void }) => {
   const bookParcel = async () => {
     setIsLoading(true);
     const response = await axios
-      .post("http://localhost:3000/api/parcel", {
+      .post(`${URL}/api/parcel`, {
         senderEmail: senderEmail,
         reciverEmail: reciverEmail,
         senderName: senderName,
@@ -48,7 +49,7 @@ const BookOrder = (props: { orderData: TableData; onClose: () => void }) => {
     if (response.status === 200) {
       if(user._id){
         const response1 = await axios
-          .put("http://localhost:3000/api/user/parcel", {
+          .put(`${URL}/api/user/parcel`, {
             userId: user._id,
             parcelId: response.parcel._id,
           })

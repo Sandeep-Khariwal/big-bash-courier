@@ -11,6 +11,7 @@ import {
 } from "@mantine/core";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
+import { URL } from "@/lib/ApiHelper";
 
 const CreateNewUserModal = (props: {
   opened: boolean;
@@ -30,7 +31,7 @@ const CreateNewUserModal = (props: {
 
   const handleSubmit = async () => {
     const response = await axios
-      .post("http://localhost:3000/api/user", {
+      .post(`${URL}/api/user`, {
         email: formData.email,
         password: formData.password,
         name: formData.name,
