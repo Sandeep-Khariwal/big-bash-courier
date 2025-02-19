@@ -251,6 +251,7 @@ const Admin = () => {
               <IoMdLogOut
                 onClick={() => {
                   LogOut();
+                  dispatch(setAdminData({ _id: "", name: "", email: "" }));
                   navigation.push("/");
                 }}
                 size={20}

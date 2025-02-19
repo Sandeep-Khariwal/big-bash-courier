@@ -23,7 +23,7 @@ const User = () => {
   const navigation = useRouter();
   const [activeTab, setActiveTab] = useState<SideTabs>(SideTabs.HOME);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-   const user = useAppSelector((state) => state.user);
+  const user = useAppSelector((state) => state.user);
 
   const dispatch = useAppDispatch();
   useEffect(() => {
@@ -31,7 +31,7 @@ const User = () => {
   }, []);
 
   const getUserByToken = async () => {
-    setIsLoading(true)
+    setIsLoading(true);
     const response = await axios
       .get(`${URL}/api/user`, {
         headers: {
@@ -41,14 +41,14 @@ const User = () => {
       .then((response) => response.data);
 
     if (response.status === 200) {
-      setIsLoading(false)
+      setIsLoading(false);
       const { data } = response;
       dispatch(setUserData(data));
     }
   };
   return (
     <>
-    <LoadingOverlay visible={isLoading} />
+      <LoadingOverlay visible={isLoading} />
       <Flex w={"100%"} mih={"100vh"}>
         <Stack
           w={"10%"}
@@ -130,6 +130,14 @@ const User = () => {
               <IoMdLogOut
                 onClick={() => {
                   LogOut();
+                  dispatch(
+                    setUserData({
+                      _id: "",
+                      name: "",
+                      email: "",
+                      discount: 0,
+                    })
+                  );
                   navigation.push("/");
                 }}
                 size={20}

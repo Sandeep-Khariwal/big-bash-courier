@@ -5,6 +5,7 @@ import axios from "axios";
 import { ParcelModel } from "../bookings/AppBookings";
 import ParcelCard from "../bookings/ParcelCard";
 import { BiArrowFromRight, BiUser } from "react-icons/bi";
+import { URL } from "@/lib/ApiHelper";
 
 export interface UserData {
   _id: string;
@@ -33,7 +34,7 @@ const AppUsers = () => {
   const getAllUsers = async () => {
     setIsLoading(true);
     const response = await axios
-      .patch("http://localhost:3000/api/user")
+      .patch(`${URL}/api/user`)
       .then((response) => response.data);
 
     if (response.status === 200) {
@@ -47,7 +48,7 @@ const AppUsers = () => {
   const getUserParcels = async () => {
     setIsLoading(true);
     const response = await axios
-      .patch("http://localhost:3000/api/user/parcel", {
+      .patch(`${URL}/api/user/parcel`, {
         parcelIds: selectedUserId,
       })
       .then((response) => response.data);
