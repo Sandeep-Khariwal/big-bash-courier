@@ -95,14 +95,8 @@ export async function PUT(req: Request) {
 
     const resultRates = rates
       .map((rate) => {
-        // Find the rate for 31kg
-        const rateFor31kg = rate.rates.find(
-          (rat: { weight: number; price: number }) => rat.weight === 31
-        );
-
         // Iterate over each rate and check for matching weight
         for (const rat of rate.rates) {
-          // console.log("rate : ", rat, rate);
           let price = rat.price;
           if(weight>31 && rat.weight === 31){
             return {
@@ -125,7 +119,7 @@ export async function PUT(req: Request) {
         }
         return null;
       })
-      .filter((item) => item !== null); // Filter out any null values
+      .filter((item) => item !== null); 
 
     console.log(resultRates);
 
