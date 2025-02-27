@@ -97,7 +97,7 @@ export async function PUT(req: Request) {
       .map((rate) => {
         // Iterate over each rate and check for matching weight
         for (const rat of rate.rates) {
-          let price = rat.price;
+          const price = rat.price;
           if(weight>31 && rat.weight === 31){
             return {
               company: rate.company,
