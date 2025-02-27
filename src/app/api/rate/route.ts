@@ -10,7 +10,7 @@ export async function POST(req: Request) {
     const { companyId, country, weightPrice } = await req.json();
 
     console.log("companyId : ", companyId);
-    
+
     // Check if the company exists
     const company = await Company.findById(companyId);
     if (!company) {
@@ -29,7 +29,7 @@ export async function POST(req: Request) {
       for (const { weight, price } of weightPrice) {
         // Check if the weight already exists in the rates for this country
         const existingWeight = existingRate.rates.find(
-          (r:{ weight: number; price: number }) => r.weight === weight
+          (r: { weight: number; price: number }) => r.weight === weight
         );
         if (existingWeight) {
           // Update price for existing weight
@@ -81,7 +81,7 @@ export async function PUT(req: Request) {
     const { country, weight } = await req.json();
 
     // Fetch rates for the given country
-    const rates = await Rate.findOne({ country }).populate({
+    const rates = await Rate.find({ country }).populate({
       path: "company",
       select: ["name"],
     });
@@ -93,42 +93,43 @@ export async function PUT(req: Request) {
       });
     }
 
-    const resultRates = [];
+    const resultRates = rates
+      .map((rate) => {
+        // Find the rate for 31kg
+        const rateFor31kg = rate.rates.find(
+          (rat: { weight: number; price: number }) => rat.weight === 31
+        );
 
-    // Loop through each company and find the rate for the selected weight
-    for (const rate of rates.rates) {
-      if (rate.weight === weight) {
-        resultRates.push({
-          company: rates.company,
-          price: rate.price,
-          weight: weight,
-          country: rates.country,
-        });
-        break;
-      }
-    }
+        // Iterate over each rate and check for matching weight
+        for (const rat of rate.rates) {
+          // console.log("rate : ", rat, rate);
+          let price = rat.price;
+          if(weight>31 && rat.weight === 31){
+            return {
+              company: rate.company,
+              price: price,
+              weight: rat.weight,
+              country: rate.country,
+            };
+          }
 
-    // If weight is greater than 31kg, cap it at 31kg
-    if (weight > 31) {
-      const maxRate = rates.rates.find((r: { weight: number; price: number }) => r.weight === 31);
+          if (rat.weight === weight) {
 
-      // Check if maxRate is undefined and handle accordingly
-      if (maxRate) {
-        resultRates.push({
-          company: rates.company,
-          price: maxRate.price,
-          weight: weight,
-          country: rates.country,
-        });
-      } else {
-        return Response.json({
-          status: 404,
-          message: "No rate found for 31kg",
-        });
-      }
-    }
+            return {
+              company: rate.company,
+              price: price,
+              weight: rat.weight,
+              country: rate.country,
+            };
+          }
+        }
+        return null;
+      })
+      .filter((item) => item !== null); // Filter out any null values
 
-    return Response.json({ status: 200, rates: resultRates });
+    console.log(resultRates);
+
+    return Response.json({ status: 200, rates: resultRates }); // rates: resultRates
   } catch (error) {
     // You can log or return the error here for better debugging
     console.error(error);
@@ -139,11 +140,11 @@ export async function PUT(req: Request) {
   }
 }
 
-export async function PATCH(req:Request) {
+export async function PATCH(req: Request) {
   try {
     const { companyId, country } = await req.json();
-    const rate = await Rate.findOne({company:companyId, country:country })
-    console.log('Company ID:', companyId, country);
+    const rate = await Rate.findOne({ company: companyId, country: country });
+    console.log("Company ID:", companyId, country);
     return Response.json({
       status: 200,
       rate: rate,
@@ -152,7 +153,7 @@ export async function PATCH(req:Request) {
     return Response.json({
       status: 500,
       message: "Internal server error",
-      error
+      error,
     });
   }
 }
