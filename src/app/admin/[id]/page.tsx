@@ -95,7 +95,7 @@ const Admin = () => {
     <>
       <LoadingOverlay visible={isLoading} />
       <Toaster />
-      <Flex w={"100%"} mih={"100vh"}>
+      <Flex w={"100%"} mih={"100vh"} >
         <Stack
           w={"10%"}
           bg={"linear-gradient(to top, #4da6cf, #ec4899)"}
@@ -106,6 +106,7 @@ const Admin = () => {
           <Flex
             direction={"column"}
             h={"100%"}
+            p={10} 
             align={"center"}
             justify={"space-between"}
           >

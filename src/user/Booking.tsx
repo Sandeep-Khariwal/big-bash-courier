@@ -52,7 +52,7 @@ const Booking = () => {
     }
   };
   return (
-    <Stack w={"100%"} mih={"80vh"} style={{ overflowY: "hidden" }}>
+    <Stack w={"100%"} mih={"60vh"} style={{ overflowY: "hidden" }}>
       <LoadingOverlay visible={isLoading} />
       <Toaster />
       <Text fz={30} fw={700} ta="center" c="#4da6cf" mb="md">
@@ -61,7 +61,7 @@ const Booking = () => {
       <ScrollArea
         w={"90%"}
         className="scrollArea"
-        h={"70vh"}
+        h={"50vh"}
         mx={"auto"}
         p={10}
         style={{

@@ -98,14 +98,14 @@ const Hero = (props: { isTopMargin: boolean }) => {
       <Card
         py={20}
         mt={props.isTopMargin ? -50 : 20}
-        w={"70%"}
+        w={isMd?"90%":"70%"}
         mx={"auto"}
         shadow="xl"
         radius={"xl"}
         style={{ position: "relative", zIndex: 1 }}
       >
         <Flex
-          w={"70%"}
+          w={isMd?"100%":"70%"}
           h={"100%"}
           direction={isMd ? "column" : "row"}
           gap={20}
@@ -114,6 +114,7 @@ const Hero = (props: { isTopMargin: boolean }) => {
           justify={"space-around"}
         >
           <Select
+          w={isMd?"100%":"auto"}
             label="Select Country"
             placeholder="Select country"
             data={countries}
@@ -121,6 +122,7 @@ const Hero = (props: { isTopMargin: boolean }) => {
             searchable
           />
           <NumberInput
+             w={isMd?"100%":"auto"}
             label="Weight"
             required
             hideControls

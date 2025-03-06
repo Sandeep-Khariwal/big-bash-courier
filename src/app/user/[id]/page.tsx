@@ -13,6 +13,7 @@ import axios from "axios";
 import { setUserData } from "@/lib/user/UserSlice";
 import Booking from "@/user/Booking";
 import { URL } from "@/lib/ApiHelper";
+import { useMediaQuery } from "@mantine/hooks";
 
 enum SideTabs {
   HOME = "home",
@@ -24,6 +25,7 @@ const User = () => {
   const [activeTab, setActiveTab] = useState<SideTabs>(SideTabs.HOME);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const user = useAppSelector((state) => state.user);
+    const isMd = useMediaQuery(`(max-width: 968px)`);
 
   const dispatch = useAppDispatch();
   useEffect(() => {
@@ -49,36 +51,46 @@ const User = () => {
   return (
     <>
       <LoadingOverlay visible={isLoading} />
-      <Flex w={"100%"} mih={"100vh"}>
+      <Flex w={"100%"} mih={"100vh"} direction={isMd?"column-reverse":"row"} >
         <Stack
-          w={"10%"}
+          w={isMd?"90%":"10%"}
+          mx={"auto"}
+          style={{
+            borderRadius: isMd ? "1rem" : "0rem",
+            position: isMd ? "fixed" : "static",
+            left: isMd ? "50%" : 0,
+            bottom: isMd ? 10 : 10, 
+            transform: isMd ? "translateX(-50%)" : "none"
+          }}
           bg={"linear-gradient(to top, #4da6cf, #ec4899)"}
           gap={20}
-          pt={20}
           align="center"
         >
           <Flex
-            direction={"column"}
-            h={"100%"}
+            direction={isMd?"row":"column"}
+            h={isMd?"auto":"100%"}
+            w={"90%"}
+            p={4}
             align={"center"}
-            justify={"start"}
+            justify={isMd?"space-between":"start"}
           >
             <Image src={"/logo.png"} w={50} alt="Not found" />
-            <Stack h={"60%"} mt={20}>
+            {/* <Flex direction={isMd?"row":"column"} h={"60%"}  mt={20}> */}
               <Flex
                 onClick={() => setActiveTab(SideTabs.HOME)}
                 align={"center"}
+                direction={isMd?"column":"row"} 
                 gap={10}
                 mt={20}
                 style={{
                   border:
-                    activeTab === SideTabs.HOME ? "1px solid white" : "none",
+                    activeTab === SideTabs.HOME ? isMd?"none": "1px solid white" : "none",
                 }}
                 p={5}
               >
-                <IoHomeSharp color="white" size={20} />
+                <IoHomeSharp color="white" size={isMd?30:20} />
                 <Text
-                  fz={20}
+                  fz={isMd?16:20}
                   ff={"Roboto"}
                   fw={600}
                   c={"white"}
@@ -90,17 +102,18 @@ const User = () => {
               <Flex
                 onClick={() => setActiveTab(SideTabs.BOOKING)}
                 align={"center"}
+                direction={isMd?"column":"row"} 
                 gap={10}
                 mt={20}
                 style={{
                   border:
-                    activeTab === SideTabs.BOOKING ? "1px solid white" : "none",
+                    activeTab === SideTabs.BOOKING ? isMd?"none":"1px solid white" : "none",
                 }}
                 p={5}
               >
-                <FaCalendarAlt color="white" size={20} />
+                <FaCalendarAlt color="white" size={isMd?30:20} />
                 <Text
-                  fz={20}
+                  fz={isMd?16:20}
                   ff={"Roboto"}
                   fw={600}
                   c={"white"}
@@ -109,14 +122,20 @@ const User = () => {
                   Booking
                 </Text>
               </Flex>
-            </Stack>
+            {/* </Flex> */}
           </Flex>
         </Stack>
-        <Stack w={"90%"}>
+        <Stack w={isMd?"100%":"90%"}  >
           <Flex
             w={"100%"}
             bg={"linear-gradient(to left, #4da6cf, #ec4899)"}
             align={"center"}
+            style={{
+              position: isMd ? "fixed" : "static",
+              left: isMd ? "50%" : 0,
+              top: isMd ? 0 : 0, 
+              transform: isMd ? "translateX(-50%)" : "none"
+            }}
             justify={"space-between"}
             gap={20}
             p={15}
@@ -146,7 +165,7 @@ const User = () => {
               />
             </Flex>
           </Flex>
-          <Stack>
+          <Stack mih={"80vh"} >
             {SideTabs.HOME === activeTab && <Hero isTopMargin={false} />}
             {SideTabs.BOOKING === activeTab && <Booking />}
           </Stack>
