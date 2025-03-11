@@ -138,7 +138,7 @@ const Navbar = () => {
         )}
       </Flex>
       {isMd && showNov && (
-        <Stack gap={20} px={20} bg={"#ec4899"} align="center" py={10}>
+        <Stack gap={20}  bg={"#ec4899"} align="center"  mt={-20} py={10} >
           {menuLinks.map((l, i: number) => (
             <Link
               key={i}

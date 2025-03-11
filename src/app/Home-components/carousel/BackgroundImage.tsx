@@ -2,10 +2,10 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { Menu, Text, Box, Flex, Button, Stack, Burger } from "@mantine/core";
-// import { IconChevronDown } from "@tabler/icons-react";
+import { Menu, Box, Flex, Button, Stack, Burger } from "@mantine/core";
 import Link from "next/link";
 import { useMediaQuery } from "@mantine/hooks";
+import TypewriterClass from "typewriter-effect";
 
 enum Links {
   HOME = "home",
@@ -23,7 +23,7 @@ export default function Navbar() {
   return (
     <Stack
       style={{
-        backgroundImage: "url('/products.jpg')",
+        backgroundImage: "url('/parcel1.png')",
         backgroundSize: "cover",
         height: "100vh",
         backgroundPosition: "center",
@@ -36,11 +36,12 @@ export default function Navbar() {
       <div
         style={{
           position: "absolute",
-          top: "20%",
+          top: "0%",
           left: 0,
           right: 0,
           bottom: 0,
-          background: "rgba(0, 0, 0, 0.5)",
+          background:
+            "linear-gradient(to bottom right,rgb(44, 81, 90) , transparent)",
           zIndex: 1,
         }}
       />
@@ -101,7 +102,11 @@ export default function Navbar() {
               onClose={() => setOpenedLogin(false)}
             >
               <Menu.Target>
-                <Button variant="outline" style={{ border: "1px solid white" }} c={"white"}>
+                <Button
+                  variant="outline"
+                  style={{ border: "1px solid white" }}
+                  c={"white"}
+                >
                   Sign in
                 </Button>
               </Menu.Target>
@@ -182,10 +187,35 @@ export default function Navbar() {
       )}
 
       {/* Main Content */}
-      <Flex w={"100%"} h={"90%"}>
-        <Text fz={54} m={"auto"} fw={700} style={{ color: "#d2af6f", zIndex: 2 }}>
-          True Bond India
-        </Text>
+      <Flex w={"100%"} h={"90%"} >
+        <Flex
+          fz={isMd ? "2rem" : "3rem"}
+          style={{ zIndex: 2 }}
+          c={"white"}
+          gap={20}
+          fw={700}
+          w={"100%"}
+          align={"center"}
+          justify={"center"}
+          direction={isMd?"column":"row"}
+        >
+          <h3
+            style={{
+              fontFamily: "Poppins, sans-serif",
+              color: "#ec4899",
+              textAlign: "center",
+            }}
+          >
+            Big Bash Courier{" "}
+          </h3>
+          <TypewriterClass
+            options={{
+              strings: [" Services!", " work!"],
+              autoStart: true,
+              loop: true,
+            }}
+          />
+        </Flex>
       </Flex>
     </Stack>
   );
