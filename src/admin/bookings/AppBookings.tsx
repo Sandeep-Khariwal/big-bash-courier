@@ -1,6 +1,6 @@
 "use client";
 
-import { LoadingOverlay, ScrollArea, Stack, Text } from "@mantine/core";
+import { Flex, LoadingOverlay, ScrollArea, Stack, Text } from "@mantine/core";
 import React, { useEffect, useState } from "react";
 import ParcelCard from "./ParcelCard";
 import axios from "axios";
@@ -9,7 +9,7 @@ export interface ParcelModel {
   _id: string;
   senderName: string;
   recieverName: string;
-  company: string;
+  company?: string;
   country: string;
   address: string;
   senderEmail: string;
@@ -27,20 +27,22 @@ import toast, { Toaster } from "react-hot-toast";
 import { URL } from "@/lib/ApiHelper";
 
 const AppBookings = () => {
-  const [allParcel,setAllParcel] = useState<ParcelModel[]>([])
+  const [allParcel, setAllParcel] = useState<ParcelModel[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [bookingType, setBookingType] = useState<string>("booking");
   useEffect(() => {
     getAllParcel();
-  }, []);
+  }, [bookingType]);
 
   const getAllParcel = async () => {
     setIsLoading(true);
+    const isBookingOrCustom = bookingType === "custom"
     const response = await axios
-      .get(`${URL}/api/parcel`)
+      .get(`${URL}/api/parcel/${isBookingOrCustom}`)
       .then((response) => response.data);
 
     if (response.status === 200) {
-      setAllParcel( response.allParcels)
+      setAllParcel(response.allParcels);
       setIsLoading(false);
     } else {
       toast.error("server issue!!");
@@ -51,9 +53,39 @@ const AppBookings = () => {
     <Stack w={"100%"} mih={"80vh"} style={{ overflowY: "hidden" }}>
       <LoadingOverlay visible={isLoading} />
       <Toaster />
-      <Text fz={30} fw={700} ta="center" c="#4da6cf" mb="md">
+      <Text fz={30} fw={700} ff={"poppins"} ta="center" c="#4da6cf" mb="md">
         📦 Parcel Bookings
       </Text>
+      <Flex  w={"90%"} align={"center"} gap={20} mx={"auto"}>
+        <Text
+          onClick={() => setBookingType("booking")}
+          c={bookingType === "booking" ? "#4da6cf" : "gray"}
+          fz={20}
+          fw={700}
+          ff={"Roboto"}
+          style={{
+            cursor: "pointer",
+            border: "none",
+            borderBottom:bookingType === "booking" ? "2px solid #4da6cf":"none",
+          }}
+        >
+          Bookings
+        </Text>
+        <Text
+          onClick={() => setBookingType("custom")}
+          c={bookingType === "custom" ? "#4da6cf" : "gray"}
+          fz={20}
+          fw={700}
+          ff={"Roboto"}
+          style={{
+            cursor: "pointer",
+            border: "none",
+            borderBottom: bookingType === "custom"?"2px solid #4da6cf":"none",
+          }}
+        >
+          Custom Bookings
+        </Text>
+      </Flex>
       <ScrollArea
         w={"90%"}
         className="scrollArea"

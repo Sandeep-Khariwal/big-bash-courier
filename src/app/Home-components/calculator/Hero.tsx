@@ -18,6 +18,7 @@ import axios from "axios";
 import { useAppSelector } from "@/lib/hooks";
 import toast, { Toaster } from "react-hot-toast";
 import { URL } from "@/lib/ApiHelper";
+import CustomBookingModal from "./CustomBookingModal";
 
 export interface TableData {
   company: {
@@ -27,6 +28,7 @@ export interface TableData {
   price: number;
   weight: number;
   country: string;
+  isCustomBooking: boolean;
 }
 const Hero = (props: { isTopMargin: boolean }) => {
   const isMd = useMediaQuery(`(max-width: 968px)`);
@@ -38,6 +40,8 @@ const Hero = (props: { isTopMargin: boolean }) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [rateTableData, setRateTableData] = useState<TableData[]>([]);
   const [noRateFound, setNoRateFound] = useState<boolean>(false);
+  const [openCustomBookingModal, setOpenCustomBookingModal] =
+    useState<boolean>(false);
 
   useEffect(() => {
     // Fetch all countries from REST Countries API
@@ -49,7 +53,10 @@ const Hero = (props: { isTopMargin: boolean }) => {
 
       if (response.status === 200) {
         setIsLoading(false);
-        const countries = response.countries.map((c: {_id:string,name:string}) => c.name) || [];
+        const countries =
+          response.countries.map(
+            (c: { _id: string; name: string }) => c.name
+          ) || [];
         setCountries(countries);
       } else {
         console.log(response);
@@ -92,20 +99,20 @@ const Hero = (props: { isTopMargin: boolean }) => {
   };
 
   return (
-    <Stack w={"100%"} mih={"40vh"}>
+    <Stack w={"100%"} mih={"20vh"}>
       <Toaster />
       <LoadingOverlay visible={isLoading} />
       <Card
         py={20}
         mt={props.isTopMargin ? -50 : 20}
-        w={isMd?"90%":"70%"}
+        w={isMd ? "90%" : "70%"}
         mx={"auto"}
         shadow="xl"
         radius={"xl"}
         style={{ position: "relative", zIndex: 1 }}
       >
         <Flex
-          w={isMd?"100%":"70%"}
+          w={isMd ? "100%" : "90%"}
           h={"100%"}
           direction={isMd ? "column" : "row"}
           gap={20}
@@ -114,7 +121,7 @@ const Hero = (props: { isTopMargin: boolean }) => {
           justify={"space-around"}
         >
           <Select
-          w={isMd?"100%":"auto"}
+            w={isMd ? "100%" : "auto"}
             label="Select Country"
             placeholder="Select country"
             data={countries}
@@ -122,7 +129,7 @@ const Hero = (props: { isTopMargin: boolean }) => {
             searchable
           />
           <NumberInput
-             w={isMd?"100%":"auto"}
+            w={isMd ? "100%" : "auto"}
             label="Weight"
             required
             hideControls
@@ -133,6 +140,14 @@ const Hero = (props: { isTopMargin: boolean }) => {
             <CgCalculator size={16} style={{ marginRight: "0.5rem" }} />{" "}
             Calculator
           </Button>
+          {props.isTopMargin && (
+            <Button
+              bg={"#ec4899"}
+              onClick={() => setOpenCustomBookingModal(true)}
+            >
+              Custom Booking
+            </Button>
+          )}
         </Flex>
       </Card>
       <Stack mt={20}>
@@ -146,6 +161,14 @@ const Hero = (props: { isTopMargin: boolean }) => {
           </Text>
         )}
       </Stack>
+      {
+        <CustomBookingModal
+          opened={openCustomBookingModal}
+          onClose={() => {
+            setOpenCustomBookingModal(false);
+          }}
+        />
+      }
     </Stack>
   );
 };

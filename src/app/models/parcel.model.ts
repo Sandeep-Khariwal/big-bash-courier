@@ -17,6 +17,7 @@ export interface ParcelModel {
   done: boolean;
   dispatch: Date | null;
   delivered: Date | null;
+  isCustomBooking:boolean;
 }
 
 const parcelSchema = new Schema<ParcelModel>({
@@ -85,6 +86,10 @@ const parcelSchema = new Schema<ParcelModel>({
   delivered: {
     type: Date,
     default: null,
+  },
+  isCustomBooking: {
+    type: Boolean,
+    default: false,
   },
 },{timestamps:true});
 

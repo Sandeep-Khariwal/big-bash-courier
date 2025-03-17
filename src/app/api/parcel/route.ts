@@ -16,9 +16,11 @@ export async function POST(req: Request) {
     weight,
     price,
     userId,
+    isCustomBooking,
   } = await req.json();
   try {
     dbConnect();
+
     const parcel = new Parcel();
     parcel._id = `PRCL-${randomUUID()}`;
     parcel.senderName = senderName;
@@ -28,29 +30,30 @@ export async function POST(req: Request) {
     parcel.reciverEmail = reciverEmail;
     parcel.senderContact = senderContact;
     parcel.recieverContact = recieverContact;
-    parcel.company = company;
     parcel.country = country;
     parcel.address = address;
     parcel.weight = Number(weight);
-    parcel.price = Number(price);
     if (userId) {
       parcel.userId = userId;
     }
+    if (company) {
+      parcel.company = company;
+    }
+    if (price) {
+      parcel.price = Number(price);
+    }
+    if (isCustomBooking) {
+      parcel.isCustomBooking = isCustomBooking;
+    }
 
     const savedParcel = await parcel.save();
-    return Response.json({ status: 200, message: "Parcel details submitted" , parcel:savedParcel });
+    return Response.json({
+      status: 200,
+      message: "Parcel details submitted",
+      parcel: savedParcel,
+    });
   } catch (e) {
     return Response.json({ status: 404, error: e });
   }
 }
 
-export async function GET() {
-  try {
-    dbConnect();
-
-    const allParcels = await Parcel.find({}).sort({ createdAt: 1 });
-    return Response.json({ status: 200, allParcels });
-  } catch (error) {
-    return Response.json({ status: 404, error });
-  }
-}

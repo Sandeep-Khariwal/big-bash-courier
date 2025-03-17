@@ -12,7 +12,7 @@ export interface parcelModel {
   _id: string;
   senderName: string;
   recieverName: string;
-  company: string;
+  company?: string;
   country: string;
   address: string;
   senderEmail: string;
@@ -46,15 +46,15 @@ export default function ParcelCard(props: {
         align="center"
       >
         <Box>
-          <Text fw={700} c={"white"}>
+          <Text fw={700} c={"white"} ff={"Roboto"}>
             {props.parcel.senderName} → {props.parcel.recieverName}
           </Text>
-          <Text size="sm" c={"white"}>
-            {props.parcel.company} - {props.parcel.country}
+          <Text size="sm" c={"white"} ff={"poppins"}>
+            {props.parcel?.company || "N/A"} - {props.parcel.country}
           </Text>
         </Box>
         <Flex align={"center"} gap={10}>
-          <Text size="sm" fw={600} c={"white"}>
+          <Text size="sm" fw={600} c={"white"} ff={"poppins"}>
             {props.parcel.weight} kg | <BiRupee />
             {props.parcel.price}
           </Text>
@@ -95,8 +95,8 @@ export default function ParcelCard(props: {
               <span
                 style={{
                   fontWeight: 400,
-                  fontSize: "16px",
-                  fontFamily: "Nunito",
+                  fontSize: "14px",
+                  fontFamily: "poppins",
                 }}
               >
                 {props.parcel.address}
@@ -115,8 +115,8 @@ export default function ParcelCard(props: {
                   <span
                     style={{
                       fontWeight: 400,
-                      fontSize: "16px",
-                      fontFamily: "Nunito",
+                      fontSize: "14px",
+                      fontFamily: "poppins",
                       marginLeft: 5,
                     }}
                   >
@@ -133,8 +133,8 @@ export default function ParcelCard(props: {
                   <span
                     style={{
                       fontWeight: 400,
-                      fontSize: "16px",
-                      fontFamily: "Nunito",
+                      fontSize: "14px",
+                      fontFamily: "poppins",
                       marginLeft: 5,
                     }}
                   >
@@ -157,8 +157,8 @@ export default function ParcelCard(props: {
                   <span
                     style={{
                       fontWeight: 400,
-                      fontSize: "16px",
-                      fontFamily: "Nunito",
+                      fontSize: "14px",
+                      fontFamily: "poppins",
                       marginLeft: 5,
                     }}
                   >
@@ -171,8 +171,8 @@ export default function ParcelCard(props: {
                   <span
                     style={{
                       fontWeight: 400,
-                      fontSize: "16px",
-                      fontFamily: "Nunito",
+                      fontSize: "14px",
+                      fontFamily: "poppins",
                       marginLeft: 5,
                     }}
                   >

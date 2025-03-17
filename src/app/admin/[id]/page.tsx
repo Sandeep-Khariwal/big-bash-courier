@@ -32,6 +32,7 @@ import AppUsers from "@/admin/user/AppUsers";
 import { useAppDispatch } from "@/lib/hooks";
 import { setAdminData } from "@/lib/admin/AdminSlice";
 import { URL } from "@/lib/ApiHelper";
+import HomeSection from "@/app/Home-components/HomeSection";
 
 enum SideTabs {
   HOME = "home",
@@ -153,7 +154,7 @@ const Admin = () => {
                   c={"white"}
                   style={{ cursor: "pointer" }}
                 >
-                  Booking
+                  Bookings
                 </Text>
               </Flex>
               <Flex
@@ -262,7 +263,7 @@ const Admin = () => {
             </Flex>
           </Flex>
           <Stack>
-            {activeTab === SideTabs.HOME && <Hero isTopMargin={false} />}
+            {activeTab === SideTabs.HOME && <HomeSection/>}
             {activeTab === SideTabs.BOOKING && <AppBookings />}
             {activeTab === SideTabs.USERS && <AppUsers />}
             {activeTab === SideTabs.SETTINGS && <SettingPage />}
