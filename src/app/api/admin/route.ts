@@ -48,7 +48,7 @@ export async function PUT(req: Request) {
       email: admin.email,
     });
 
-    return Response.json({ admin: admin, status: 200 });
+    return Response.json({ admin: admin, status: 200, token:token });
   } catch (e) {
     console.log(e);
     return Response.json({ status: 404, error: e });

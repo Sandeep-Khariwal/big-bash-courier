@@ -5,14 +5,11 @@ import {
   LoadingOverlay,
   Modal,
   NumberInput,
-  Text,
   TextInput,
 } from "@mantine/core";
 import React, { useState } from "react";
-import { TableData } from "./Hero";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
-import { BiRupee } from "react-icons/bi";
 import { useAppSelector } from "@/lib/hooks";
 import { URL } from "@/lib/ApiHelper";
 

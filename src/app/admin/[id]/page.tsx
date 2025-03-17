@@ -18,7 +18,6 @@ import { FaCalendarAlt } from "react-icons/fa";
 import { IoMdLogOut } from "react-icons/io";
 import { MdAdd } from "react-icons/md";
 import { IoSettings } from "react-icons/io5";
-import Hero from "@/app/Home-components/calculator/Hero";
 import CreateNewUserModal from "@/admin/CreateNewUserModal";
 import { GetUserToken, LogOut } from "@/utility/AddLocalStorage";
 import { useRouter } from "next/navigation";
