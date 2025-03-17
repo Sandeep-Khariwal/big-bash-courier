@@ -29,25 +29,26 @@ export async function PUT(req: Request) {
         dbConnect()
     const { email, password } = await req.json();
     const admin = await Admin.findOne({ email: email });
+    
 
-    if (!admin) {
-      return Response.json({ status: 404, message: "User not registered" });
-    }
-    const isMatch = await bcrypt.compare(password, admin.password);
-    if (!isMatch) {
-      return Response.json({
-        status: 500,
-        message: "Invalid email or password",
-      });
-    }
+    // if (!admin) {
+    //   return Response.json({ status: 404, message: "User not registered" });
+    // }
+    // const isMatch = await bcrypt.compare(password, admin.password);
+    // if (!isMatch) {
+    //   return Response.json({
+    //     status: 500,
+    //     message: "Invalid email or password",
+    //   });
+    // }
 
-    const token = generateAccessToken({
-      _id: admin._id,
-      name: admin.name,
-      email: admin.email,
-    });
+    // const token = generateAccessToken({
+    //   _id: admin._id,
+    //   name: admin.name,
+    //   email: admin.email,
+    // });
 
-    return Response.json({ admin: admin, status: 200, token: token });
+    return Response.json({ admin: admin, status: 200 });
   } catch (e) {
     console.log(e);
     return Response.json({ status: 404, error: e });
