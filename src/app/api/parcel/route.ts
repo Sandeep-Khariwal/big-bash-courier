@@ -4,15 +4,15 @@ import { randomUUID } from "crypto";
 
 export async function POST(req: Request) {
   const {
-    senderEmail,
-    reciverEmail,
     senderName,
     recieverName,
     senderContact,
     recieverContact,
     company,
-    country,
-    address,
+    recieverAddress,
+    senderAddress,
+    recieverPinCode,
+    senderPinCode,
     weight,
     price,
     userId,
@@ -25,13 +25,12 @@ export async function POST(req: Request) {
     parcel._id = `PRCL-${randomUUID()}`;
     parcel.senderName = senderName;
     parcel.recieverName = recieverName;
-    parcel.senderEmail = senderEmail;
-    parcel.senderEmail = senderEmail;
-    parcel.reciverEmail = reciverEmail;
     parcel.senderContact = senderContact;
     parcel.recieverContact = recieverContact;
-    parcel.country = country;
-    parcel.address = address;
+    parcel.recieverAddress = recieverAddress;
+    parcel.senderAddress = senderAddress;
+    parcel.recieverPinCode = recieverPinCode;
+    parcel.senderPinCode = senderPinCode;
     parcel.weight = Number(weight);
     if (userId) {
       parcel.userId = userId;

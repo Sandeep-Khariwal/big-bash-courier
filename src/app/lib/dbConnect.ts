@@ -15,10 +15,8 @@ async function dbConnect(): Promise<void> {
 
   try {
     // Attempt to connect to the database
-    const db = await mongoose.connect(process.env.MONGODB_URI || "mongodb+srv://infomylibraryonline:Twfvxv57AesI8Z3x@cluster0.xgaea.mongodb.net/courier?retryWrites=true&w=majority&appName=Cluster0", {});
-
+    const db = await mongoose.connect(process.env.MONGODB_URI || "mongodb+srv://bigbashcourier:bigbashcourierservice@bigbash.uetl9.mongodb.net/courier?retryWrites=true&w=majority&appName=Cluster0", {});
     connection.isConnected = db.connections[0].readyState;
-
     console.log("Database connected successfully");
   } catch (error) {
     console.error("Database connection failed:", error);

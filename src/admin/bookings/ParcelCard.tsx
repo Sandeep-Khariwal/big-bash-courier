@@ -1,33 +1,66 @@
 "use client";
 
-import { Box, Flex, Stack, Text } from "@mantine/core";
+import { URL } from "@/lib/ApiHelper";
+import { Box, Flex, LoadingOverlay, Stack, Text } from "@mantine/core";
+import axios from "axios";
 import { useState } from "react";
+import { BiArrowFromLeft, BiArrowFromTop, BiRupee } from "react-icons/bi";
+import { FaCheckCircle, FaMapPin } from "react-icons/fa";
 import {
-  BiArrowFromLeft,
-  BiArrowFromTop,
-  BiRupee,
-} from "react-icons/bi";
+  FaAddressCard,
+  FaPhone,
+  FaUser,
+} from "react-icons/fa6";
+import toast, { Toaster } from "react-hot-toast";
 
 export interface parcelModel {
   _id: string;
   senderName: string;
+  userId: string;
   recieverName: string;
-  company?: string;
+  company: string;
   country: string;
-  address: string;
+  recieverAddress: string;
+  senderAddress: string;
   senderEmail: string;
   reciverEmail: string;
   senderContact: string;
   recieverContact: string;
+  recieverPinCode: string;
+  senderPinCode: string;
   weight: number;
   price: number;
+  done: boolean;
+  dispatch: Date | null;
+  delivered: Date | null;
+  isCustomBooking: boolean;
 }
 
 export default function ParcelCard(props: {
   parcel: parcelModel;
   index: number;
+  getAllParcel?: () => void;
 }) {
   const [openCard, setOpenCard] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const markDone = async () => {
+    setIsLoading(true);
+    const response = await axios
+      .put(`${URL}/api/parcel/${props.parcel._id}`, { id: props.parcel._id })
+      .then((response) => response.data);
+
+    if (response.status === 200) {
+      toast.success("Booking marked");
+      if (props.getAllParcel) {
+        props.getAllParcel();
+      }
+      setIsLoading(false);
+    } else {
+      toast.error("server issue!!");
+      console.log(response);
+    }
+  };
   return (
     <Stack
       w={"95%"}
@@ -39,6 +72,8 @@ export default function ParcelCard(props: {
         transition: "0.3s",
       }}
     >
+      <LoadingOverlay visible={isLoading} />
+      <Toaster />
       <Flex
         key={props.parcel._id}
         p="md"
@@ -50,13 +85,15 @@ export default function ParcelCard(props: {
             {props.parcel.senderName} → {props.parcel.recieverName}
           </Text>
           <Text size="sm" c={"white"} ff={"poppins"}>
-            {props.parcel?.company || "N/A"} - {props.parcel.country}
+            {props.parcel?.company || "To"} - {props.parcel.recieverAddress}
           </Text>
         </Box>
         <Flex align={"center"} gap={10}>
           <Text size="sm" fw={600} c={"white"} ff={"poppins"}>
-            {props.parcel.weight} kg | <BiRupee />
-            {props.parcel.price}
+            {props.parcel.weight} kg
+            {props.parcel.price
+              ? "| " + <BiRupee /> + " " + props.parcel.price
+              : ""}
           </Text>
           {openCard ? (
             <BiArrowFromTop
@@ -73,6 +110,13 @@ export default function ParcelCard(props: {
               onClick={() => setOpenCard(!openCard)}
             />
           )}
+
+          <FaCheckCircle
+            color="green"
+            size={24}
+            style={{ cursor: "pointer" }}
+            onClick={markDone}
+          />
         </Flex>
       </Flex>
       {openCard && (
@@ -85,33 +129,80 @@ export default function ParcelCard(props: {
               color: "white",
             }}
           >
-            <Text
-              fz={20}
-              ff={"Roboto"}
-              fw={700}
-              style={{ marginBottom: "8px", whiteSpace: "nowrap" }}
-            >
-              Address:{" "}
-              <span
-                style={{
-                  fontWeight: 400,
-                  fontSize: "14px",
-                  fontFamily: "poppins",
-                }}
-              >
-                {props.parcel.address}
-              </span>
-            </Text>
-
             <Flex w={"100%"} align={"center"} justify={"start"} gap={30}>
-              <Stack w={"50%"} >
+              <Stack w={"50%"}>
                 <Text
+                  fz={20}
+                  ff={"Roboto"}
+                  fw={600}
+                  style={{ marginBottom: "8px", whiteSpace: "nowrap" }}
+                >
+                  From :
+                </Text>
+                <Flex gap={15} align={"center"}>
+                  <Flex
+                    fz={20}
+                    ff={"Roboto"}
+                    fw={700}
+                    style={{ marginBottom: "8px", whiteSpace: "nowrap" }}
+                  >
+                    <FaUser />
+                    <span
+                      style={{
+                        fontWeight: 400,
+                        fontSize: "14px",
+                        fontFamily: "poppins",
+                        marginLeft: 5,
+                      }}
+                    >
+                      {props.parcel.senderName}
+                    </span>
+                  </Flex>
+                  <Flex
+                    fz={20}
+                    ff={"Roboto"}
+                    fw={700}
+                    style={{ marginBottom: "8px", whiteSpace: "nowrap" }}
+                  >
+                    <FaPhone />
+                    <span
+                      style={{
+                        fontWeight: 400,
+                        fontSize: "14px",
+                        fontFamily: "poppins",
+                        marginLeft: 5,
+                      }}
+                    >
+                      {props.parcel.senderContact}
+                    </span>
+                  </Flex>
+                  <Flex
+                    fz={20}
+                    ff={"Roboto"}
+                    fw={700}
+                    style={{ marginBottom: "8px", whiteSpace: "nowrap" }}
+                  >
+                    <FaMapPin />
+                    <span
+                      style={{
+                        fontWeight: 400,
+                        fontSize: "14px",
+                        fontFamily: "poppins",
+                        marginLeft: 5,
+                      }}
+                    >
+                      {props.parcel.senderPinCode}
+                    </span>
+                  </Flex>
+                </Flex>
+
+                <Flex
                   fz={20}
                   ff={"Roboto"}
                   fw={700}
                   style={{ marginBottom: "8px", whiteSpace: "nowrap" }}
                 >
-                  ✉ Sender Email:{" "}
+                  <FaAddressCard />
                   <span
                     style={{
                       fontWeight: 400,
@@ -120,54 +211,84 @@ export default function ParcelCard(props: {
                       marginLeft: 5,
                     }}
                   >
-                    {props.parcel.senderEmail}
+                    {props.parcel.senderAddress}
                   </span>
-                </Text>
-                <Text
-                  fz={20}
-                  ff={"Roboto"}
-                  fw={700}
-                  style={{ marginBottom: "8px", whiteSpace: "nowrap" }}
-                >
-                  ✉ Receiver Email:{" "}
-                  <span
-                    style={{
-                      fontWeight: 400,
-                      fontSize: "14px",
-                      fontFamily: "poppins",
-                      marginLeft: 5,
-                    }}
-                  >
-                    {props.parcel.reciverEmail}
-                  </span>
-                </Text>
+                </Flex>
               </Stack>
 
               <Stack w={"50%"}>
                 <Text
                   fz={20}
                   ff={"Roboto"}
-                  fw={700}
-                  style={{
-                    marginBottom: "8px",
-                    whiteSpace: "nowrap",
-                  }}
+                  fw={600}
+                  style={{ marginBottom: "8px", whiteSpace: "nowrap" }}
                 >
-                  📞 Sender Contact:{" "}
-                  <span
-                    style={{
-                      fontWeight: 400,
-                      fontSize: "14px",
-                      fontFamily: "poppins",
-                      marginLeft: 5,
-                    }}
-                  >
-                    {props.parcel.senderContact}
-                  </span>
+                  To :
                 </Text>
+                <Flex gap={10} align={"center"}>
+                  <Flex
+                    fz={20}
+                    ff={"Roboto"}
+                    fw={700}
+                    style={{ marginBottom: "8px", whiteSpace: "nowrap" }}
+                  >
+                    <FaUser />
+                    <span
+                      style={{
+                        fontWeight: 400,
+                        fontSize: "14px",
+                        fontFamily: "poppins",
+                        marginLeft: 5,
+                      }}
+                    >
+                      {props.parcel.recieverName}
+                    </span>
+                  </Flex>
+                  <Flex
+                    fz={20}
+                    ff={"Roboto"}
+                    fw={700}
+                    style={{ marginBottom: "8px", whiteSpace: "nowrap" }}
+                  >
+                    <FaPhone />
+                    <span
+                      style={{
+                        fontWeight: 400,
+                        fontSize: "14px",
+                        fontFamily: "poppins",
+                        marginLeft: 5,
+                      }}
+                    >
+                      {props.parcel.recieverContact}
+                    </span>
+                  </Flex>
+                  <Flex
+                    fz={20}
+                    ff={"Roboto"}
+                    fw={700}
+                    style={{ marginBottom: "8px", whiteSpace: "nowrap" }}
+                  >
+                    <FaMapPin />
+                    <span
+                      style={{
+                        fontWeight: 400,
+                        fontSize: "14px",
+                        fontFamily: "poppins",
+                        marginLeft: 5,
+                      }}
+                    >
+                      {props.parcel.recieverPinCode}
+                    </span>
+                  </Flex>
+                </Flex>
 
-                <Text fz={20} ff={"Roboto"} fw={700}>
-                  📞 Receiver Contact:{" "}
+                <Flex
+                  fz={20}
+                  ff={"Roboto"}
+                  fw={700}
+                  style={{ marginBottom: "8px", whiteSpace: "nowrap" }}
+                >
+                  <FaAddressCard />
                   <span
                     style={{
                       fontWeight: 400,
@@ -176,9 +297,9 @@ export default function ParcelCard(props: {
                       marginLeft: 5,
                     }}
                   >
-                    {props.parcel.recieverContact}
+                    {props.parcel.recieverAddress}
                   </span>
-                </Text>
+                </Flex>
               </Stack>
             </Flex>
           </Stack>

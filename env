@@ -1,2 +1,2 @@
 TOKEN_SECRET = "bigbashcourierservice"
-MONGODB_URI = "mongodb+srv://infomylibraryonline:Twfvxv57AesI8Z3x@cluster0.xgaea.mongodb.net/courier?retryWrites=true&w=majority&appName=Cluster0"
+MONGODB_URI = "mongodb+srv://bigbashcourier:bigbashcourierservice@bigbash.uetl9.mongodb.net/courier?retryWrites=true&w=majority&appName=Cluster0"

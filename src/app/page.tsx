@@ -2,7 +2,7 @@
 
 import { Stack } from "@mantine/core";
 import Navbar from "./Home-components/NavBar";
-import Hero from "./Home-components/calculator/Hero";
+// import Hero from "./Home-components/calculator/Hero";
 import Service from "./Home-components/Service";
 import AboutPage from "./Home-components/About";
 import Map from "./Home-components/Map";
@@ -16,6 +16,7 @@ import { useAppDispatch } from "@/lib/hooks";
 import { setUserData } from "@/lib/user/UserSlice";
 import { setAdminData } from "@/lib/admin/AdminSlice";
 import { URL } from "@/lib/ApiHelper";
+import ClientBookingForm from "./Home-components/ClientBookingForm";
 
 export default function Home() {
   const dispatch = useAppDispatch();
@@ -48,7 +49,8 @@ export default function Home() {
     <Stack w={"100%"} bg={"#FAFAFA"}>
       <Navbar />
       <BackgroundCarouselWithHeading />
-      <Hero isTopMargin={true} />
+      <ClientBookingForm/>
+      {/* <Hero isTopMargin={true} /> */}
       <AboutPage />
       <Service />
       <Map />

@@ -14,10 +14,34 @@ export async function GET(
     if (isCustomBooking === "true") {
       isTrue = true;
     }
-    const allParcels = await Parcel.find({ isCustomBooking: isTrue });
+    const allParcels = await Parcel.find({
+      isCustomBooking: isTrue,
+      done: false,
+    });
 
     return Response.json({ status: 200, allParcels });
   } catch (error) {
     return Response.json({ status: 404, error });
+  }
+}
+export async function PUT(
+  req: Request
+) {
+  try {
+    const { id } = await req.json();
+    console.log("id is ", id);
+    
+    dbConnect();
+
+    const booking = await Parcel.findByIdAndUpdate(id, { done: true });
+    if (!booking) {
+      return Response.json({ status: 404, message: "booking not found" });
+    }
+    return Response.json({ status: 200, message: "booking marked done" });
+  } catch (error) {
+    return Response.json({
+      status: 500,
+      error,
+    });
   }
 }

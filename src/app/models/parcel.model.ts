@@ -7,11 +7,14 @@ export interface ParcelModel {
   recieverName: string;
   company: string;
   country: string;
-  address: string;
+  recieverAddress: string;
+  senderAddress: string;
   senderEmail: string;
   reciverEmail: string;
   senderContact: string;
   recieverContact: string;
+  recieverPinCode: string;
+  senderPinCode: string;
   weight: number;
   price: number;
   done: boolean;
@@ -63,7 +66,19 @@ const parcelSchema = new Schema<ParcelModel>({
     type: String,
     default: "",
   },
-  address: {
+  recieverAddress: {
+    type: String,
+    default: "",
+  },
+  senderAddress: {
+    type: String,
+    default: "",
+  },
+  recieverPinCode: {
+    type: String,
+    default: "",
+  },
+  senderPinCode: {
     type: String,
     default: "",
   },

@@ -5,22 +5,27 @@ import React, { useEffect, useState } from "react";
 import ParcelCard from "./ParcelCard";
 import axios from "axios";
 
-export interface ParcelModel {
+export interface ParcelModel  {
   _id: string;
   senderName: string;
+  userId: string;
   recieverName: string;
-  company?: string;
+  company: string;
   country: string;
-  address: string;
+  recieverAddress: string;
+  senderAddress: string;
   senderEmail: string;
   reciverEmail: string;
   senderContact: string;
   recieverContact: string;
+  recieverPinCode: string;
+  senderPinCode: string;
   weight: number;
   price: number;
-  done?: boolean;
-  dispatch?: Date | null;
-  delivered?: Date | null;
+  done: boolean;
+  dispatch: Date | null;
+  delivered: Date | null;
+  isCustomBooking:boolean;
 }
 
 import toast, { Toaster } from "react-hot-toast";
@@ -49,6 +54,8 @@ const AppBookings = () => {
       console.log(response);
     }
   };
+  console.log("allParcel : ", allParcel);
+  
   return (
     <Stack w={"100%"} mih={"80vh"} style={{ overflowY: "hidden" }}>
       <LoadingOverlay visible={isLoading} />
@@ -99,7 +106,7 @@ const AppBookings = () => {
       >
         <Stack>
           {allParcel.map((parcel: ParcelModel, index) => (
-            <ParcelCard key={parcel._id} parcel={parcel} index={index} />
+            <ParcelCard key={parcel._id} parcel={parcel} index={index} getAllParcel={()=>getAllParcel()} />
           ))}
         </Stack>
       </ScrollArea>

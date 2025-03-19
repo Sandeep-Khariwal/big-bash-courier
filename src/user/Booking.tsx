@@ -4,28 +4,11 @@ import { LoadingOverlay, ScrollArea, Stack, Text } from "@mantine/core";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
-export interface ParcelModel {
-  _id: string;
-  senderName: string;
-  recieverName: string;
-  company: string;
-  country: string;
-  address: string;
-  senderEmail: string;
-  reciverEmail: string;
-  senderContact: string;
-  recieverContact: string;
-  weight: number;
-  price: number;
-  done?: boolean;
-  dispatch?: Date | null;
-  delivered?: Date | null;
-}
-
 import toast, { Toaster } from "react-hot-toast";
 import ParcelCard from "@/admin/bookings/ParcelCard";
 import { useAppSelector } from "@/lib/hooks";
 import { URL } from "@/lib/ApiHelper";
+import { ParcelModel } from "@/admin/bookings/AppBookings";
 
 const Booking = () => {
   const [allParcel, setAllParcel] = useState<ParcelModel[]>([]);

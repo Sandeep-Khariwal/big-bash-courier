@@ -3,6 +3,8 @@ import "./globals.css";
 import "@mantine/core/styles.css";
 import { MantineProvider } from "@mantine/core";
 import StoreProvider from "@/lib/StoreProvider";
+import "@mantine/core/styles.css";
+import "@mantine/dates/styles.css";
 
 export const metadata: Metadata = {
   title: {

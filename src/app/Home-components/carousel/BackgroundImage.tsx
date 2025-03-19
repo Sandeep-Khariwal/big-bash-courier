@@ -5,7 +5,6 @@ import Image from "next/image";
 import { Menu, Box, Flex, Button, Stack, Burger } from "@mantine/core";
 import Link from "next/link";
 import { useMediaQuery } from "@mantine/hooks";
-import TypewriterClass from "typewriter-effect";
 
 enum Links {
   HOME = "home",
@@ -41,7 +40,7 @@ export default function Navbar() {
           right: 0,
           bottom: 0,
           background:
-            "linear-gradient(to bottom right,rgb(44, 81, 90) , transparent)",
+            "linear-gradient(to bottom right,rgb(81, 100, 105) , transparent)",
           zIndex: 1,
         }}
       />
@@ -187,7 +186,7 @@ export default function Navbar() {
       )}
 
       {/* Main Content */}
-      <Flex w={"100%"} h={"90%"} >
+      {/* <Flex w={"100%"} h={"90%"} >
         <Flex
           fz={isMd ? "2rem" : "3rem"}
           style={{ zIndex: 2 }}
@@ -216,7 +215,7 @@ export default function Navbar() {
             }}
           />
         </Flex>
-      </Flex>
+      </Flex> */}
     </Stack>
   );
 }
