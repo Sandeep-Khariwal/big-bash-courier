@@ -1,4 +1,4 @@
-import { BillData } from "@/app/Home-components/HomeSection";
+import { BillData } from "./CreateBill";
 
 export const createBill = (data: BillData) => {
   return `
@@ -6,7 +6,7 @@ export const createBill = (data: BillData) => {
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Big Bash courier service</title>
     <style>
     @media print {
   * {
@@ -35,7 +35,7 @@ export const createBill = (data: BillData) => {
             <p
               style="
                 font-weight: 700;
-                font-size: 26px;
+                font-size: 22px;
                 color: #ec4899;
                 margin: 0;
               "
@@ -45,7 +45,7 @@ export const createBill = (data: BillData) => {
             <p
               style="
                 font-weight: 700;
-                font-size: 26px;
+                font-size: 22px;
                 color: #ec4899;
                 margin: 0;
               "
@@ -55,12 +55,22 @@ export const createBill = (data: BillData) => {
             <p
               style="
                 font-weight: 700;
-                font-size: 26px;
+                font-size: 22px;
                 color: #ec4899;
                 margin: 0;
               "
             >
               Courier
+            </p>
+                        <p
+              style="
+                font-weight: 700;
+                font-size: 22px;
+                color: #ec4899;
+                margin: 0;
+              "
+            >
+              Service
             </p>
           </div>
         </div>
@@ -123,7 +133,7 @@ export const createBill = (data: BillData) => {
               display: flex;
             "
           >
-            <p style="margin: auto; font-size: 18px; font-weight: 500">
+            <p style="margin: auto; font-size: 18px;font-weight:700; color:white;">
               Tracking No.
             </p>
           </div>
@@ -147,7 +157,6 @@ export const createBill = (data: BillData) => {
             style="
               height: 10%;
              border: none;
-            //   border-right: 1px solid #ec4899;
               
               display: flex;
               justify-content: space-around;
@@ -156,7 +165,7 @@ export const createBill = (data: BillData) => {
             "
           >
             <p style="color: rgb(21, 121, 121)">
-              https://www.bigbashcourierservice.in
+              🌐 bigbashcourierservice.in
             </p>
             <p style="color: rgb(21, 121, 121)">Big Bash courier service</p>
           </div>
@@ -171,6 +180,8 @@ export const createBill = (data: BillData) => {
                 align-items: center;
                 justify-content: center;
                 background-color: #ec4899;
+                font-weight:600; 
+                color:white;
               "
             >
               <span>S</span>
@@ -194,7 +205,7 @@ export const createBill = (data: BillData) => {
               <p
                 style="
                   font-weight: 700;
-                  font-size: 16px;
+                  font-size: 20px;
                   color: rgb(62, 61, 61);
                   margin: 2px;
                 "
@@ -204,7 +215,7 @@ export const createBill = (data: BillData) => {
               <p
                 style="
                   font-weight: 700;
-                  font-size: 16px;
+                  font-size: 20px;
                   color: rgb(62, 61, 61);
                   margin: 2px;
                 "
@@ -214,7 +225,7 @@ export const createBill = (data: BillData) => {
               <p
                 style="
                   font-weight: 700;
-                  font-size: 16px;
+                  font-size: 20px;
                   color: rgb(62, 61, 61);
                   margin: 2px;
                 "
@@ -234,7 +245,7 @@ export const createBill = (data: BillData) => {
               <div
                 style="height: 15%; background-color: #ec4899; display: flex"
               >
-                <p style="margin: auto; font-size: 18px; font-weight: 500">
+                <p style="margin: auto; font-size: 18px;font-weight:700; color:white;">
                   Origin
                 </p>
               </div>
@@ -246,7 +257,10 @@ export const createBill = (data: BillData) => {
                   color: rgb(62, 61, 61);
                 "
               >
-                 Big bash sirsa
+                 Big Bash <br/>
+                 <span style="color:#ec4899" >
+                 ${data.origin}
+                 </span>
               </p>
             </div>
           </div>
@@ -260,6 +274,7 @@ export const createBill = (data: BillData) => {
                 align-items: center;
                 justify-content: center;
                 background-color: #ec4899;
+                font-weight:700; color:white;
               "
             >
               <span>R</span>
@@ -285,7 +300,7 @@ export const createBill = (data: BillData) => {
               <p
                 style="
                   font-weight: 600;
-                  font-size: 16px;
+                  font-size: 20px;
                   color: rgb(62, 61, 61);
                   margin: 2px;
                 "
@@ -295,7 +310,7 @@ export const createBill = (data: BillData) => {
               <p
                 style="
                   font-weight: 600;
-                  font-size: 16px;
+                  font-size: 20px;
                   color: rgb(62, 61, 61);
                   margin: 2px;
                 "
@@ -305,7 +320,7 @@ export const createBill = (data: BillData) => {
               <p
                 style="
                   font-weight: 600;
-                  font-size: 16px;
+                  font-size: 20px;
                   color: rgb(62, 61, 61);
                   margin: 2px;
                 "
@@ -317,7 +332,7 @@ export const createBill = (data: BillData) => {
               <div
                 style="height: 15%; background-color: #ec4899; display: flex"
               >
-                <p style="margin: auto; font-size: 18px; font-weight: 500">
+                <p style="margin: auto; font-size: 18px;font-weight:700; color:white;">
                   Destination
                 </p>
               </div>
@@ -336,7 +351,81 @@ export const createBill = (data: BillData) => {
             </div>
           </div>
         </div>
-        <div style="width: 33%; height: 100%; border: 1px solid #ec4899"></div>
+        <div style="width: 33%; height: 100%; border: 1px solid #ec4899">
+
+                <div
+          style="
+            width: 100%;
+            height:50%;
+            // border: 1px solid #ec4899;
+               border-bottom: 0px;
+            display: flex;
+            flex-direction: column;
+          "
+        >
+          <div
+            style="
+              height: 25%;
+              width: 100%;
+              background-color: #ec4899;
+              display: flex;
+            "
+          >
+            <p style="margin: auto; font-size: 18px;font-weight:700; color:white;">
+             Declared value
+            </p>
+          </div>
+          <div style="height: 75%; width: 100%; display: flex">
+            <p
+              style="
+                margin: auto;
+                font-weight: 700;
+                font-size: 30px;
+                color: rgb(62, 61, 61);
+              "
+            >
+              Rs ${data.goodsValue}
+            </p>
+          </div>
+        </div>
+
+                <div
+          style="
+            width: 100%;
+              height:50%;
+            // border: 1px solid #ec4899;
+               border-bottom: 0px;
+            display: flex;
+            flex-direction: column;
+          "
+        >
+          <div
+            style="
+              height: 25%;
+              width: 100%;
+              background-color: #ec4899;
+              display: flex;
+            "
+          >
+            <p style="margin: auto; font-size: 18px;font-weight:700; color:white;">
+              Good details
+            </p>
+          </div>
+          <div style="height: 75%; width: 100%; display: flex">
+            <p
+              style="
+                margin: auto;
+                font-weight: 700;
+                font-size: 30px;
+                color: rgb(62, 61, 61);
+              "
+            >
+              ${data.goodsDesc}
+            </p>
+          </div>
+        </div>
+
+        </div>
       </div>
       <div style="width: 100%; height: 15%; display: flex">
         <div
@@ -348,9 +437,9 @@ export const createBill = (data: BillData) => {
           "
         >
           <div style="height: 25%; background-color: #ec4899; display: flex">
-            <p style="margin: auto; font-size: 17px; font-weight: 500">Qty</p>
+            <p style="margin: auto;font-size: 18px;font-weight:700; color:white;">Qty</p>
           </div>
-          <p style="margin: auto; font-size: 17px; font-weight: 500"> ${
+          <p style="margin: auto; font-size: 20px; font-weight: 500"> ${
             data.pieces
           }</p>
         </div>
@@ -363,14 +452,14 @@ export const createBill = (data: BillData) => {
           "
         >
           <div style="height: 25%; background-color: #ec4899; display: flex">
-            <p style="margin: auto; font-size: 17px; font-weight: 500">
+            <p style="margin: auto; font-size: 18px;font-weight:700; color:white;">
               Weight
             </p>
           </div>
           <p
             style="
               margin: auto;
-              font-size: 17px;
+              font-size: 20px;
               font-weight: 500;
               margin: auto;
             "
@@ -387,11 +476,11 @@ export const createBill = (data: BillData) => {
           "
         >
           <div style="height: 25%; background-color: #ec4899; display: flex">
-            <p style="margin: auto; font-size: 17px; font-weight: 500">
+            <p style="margin: auto; font-size: 18px;font-weight:700; color:white;">
               Charges
             </p>
           </div>
-          <p style="margin: auto; font-size: 17px; font-weight: 500"> ${
+          <p style="margin: auto; font-size: 20px; font-weight: 500"> ${
             data.netAmount
           }</p>
         </div>
@@ -404,14 +493,21 @@ export const createBill = (data: BillData) => {
           "
         >
           <div style="height: 25%; background-color: #ec4899; display: flex">
-            <p style="margin: auto; font-size: 17px; font-weight: 500"> ${formatDate(
-              data.dateOfBirth || new Date()
-            )}</p>
+            <p style="margin: auto; font-size: 18px;font-weight:700; color:white;"> Date </p>
           </div>
-          <p style="margin: auto; font-size: 17px; font-weight: 500">
-            24/03/2025
+          <p style="margin: auto; font-size: 20px; font-weight: 500">
+            ${formatDate(data.date || new Date())}
           </p>
         </div>
+      </div>
+            <div style="width: 98%; padding: 7px; display: flex; border: 2px solid #ec4899;border-top: none;">
+        <p
+          style="margin: auto; font-size: 20px; font-weight: 600; color: #ec4899"
+        >
+          THIS NON-NEGOTIABLE CONSIGNMENT NOTES IS SUBJECT TO STANDARD
+          CONDITIONS OF CARRIAGE SHOWN ON LIMITED LIABLITED TO A MAXIMUM OF RS.
+          100/-PER CONSIGNMENT ANY CAUSE (UNIN-SURED) RECORDED FOR 30 DAYS ONLY,
+        </p>
       </div>
     </div>
   </body>

@@ -13,7 +13,7 @@ import {
 } from "@mantine/core";
 import React, { useEffect, useState } from "react";
 import { IoHomeSharp } from "react-icons/io5";
-import { FaAddressBook } from "react-icons/fa";
+import { FaAddressBook, FaWhatsapp } from "react-icons/fa";
 import { FaCalendarAlt } from "react-icons/fa";
 import { IoMdLogOut } from "react-icons/io";
 import { MdAdd } from "react-icons/md";
@@ -32,11 +32,13 @@ import { useAppDispatch } from "@/lib/hooks";
 import { setAdminData } from "@/lib/admin/AdminSlice";
 import { URL } from "@/lib/ApiHelper";
 import HomeSection from "@/app/Home-components/HomeSection";
+import MessageSection from "@/admin/wtsp/MessageSection";
 
 enum SideTabs {
   HOME = "home",
   BOOKING = "booking",
   USERS = "users",
+  MSG = "message",
   EDITRATE = "edit rate",
   SETTINGS = "settings",
 }
@@ -95,7 +97,7 @@ const Admin = () => {
     <>
       <LoadingOverlay visible={isLoading} />
       <Toaster />
-      <Flex w={"100%"} mih={"100vh"} >
+      <Flex w={"100%"} mih={"100vh"}>
         <Stack
           w={"10%"}
           bg={"linear-gradient(to top, #4da6cf, #ec4899)"}
@@ -106,7 +108,7 @@ const Admin = () => {
           <Flex
             direction={"column"}
             h={"100%"}
-            p={10} 
+            p={10}
             align={"center"}
             justify={"space-between"}
           >
@@ -178,6 +180,28 @@ const Admin = () => {
                   Users
                 </Text>
               </Flex>
+              <Flex
+                onClick={() => setActiveTab(SideTabs.MSG)}
+                align={"center"}
+                gap={10}
+                mt={20}
+                style={{
+                  border:
+                    activeTab === SideTabs.MSG ? "1px solid white" : "none",
+                }}
+                p={5}
+              >
+                <FaWhatsapp color="white" size={25} />
+                <Text
+                  fz={20}
+                  ff={"Roboto"}
+                  fw={600}
+                  c={"white"}
+                  style={{ cursor: "pointer" }}
+                >
+                  Message
+                </Text>
+              </Flex>
             </Stack>
             <Flex
               onClick={() => setActiveTab(SideTabs.SETTINGS)}
@@ -205,7 +229,7 @@ const Admin = () => {
             </Flex>
           </Flex>
         </Stack>
-        <Stack w={"90%"}>
+        <Stack w={"90%"} h={"100vh"} style={{ overflow: "hidden" }}>
           <Flex
             w={"100%"}
             bg={"linear-gradient(to left, #4da6cf, #ec4899)"}
@@ -262,9 +286,10 @@ const Admin = () => {
             </Flex>
           </Flex>
           <Stack>
-            {activeTab === SideTabs.HOME && <HomeSection/>}
+            {activeTab === SideTabs.HOME && <HomeSection />}
             {activeTab === SideTabs.BOOKING && <AppBookings />}
             {activeTab === SideTabs.USERS && <AppUsers />}
+            {activeTab === SideTabs.MSG && <MessageSection />}
             {activeTab === SideTabs.SETTINGS && <SettingPage />}
           </Stack>
         </Stack>

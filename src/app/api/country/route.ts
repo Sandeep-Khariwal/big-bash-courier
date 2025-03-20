@@ -14,6 +14,7 @@ export async function POST(req: Request) {
     return Response.json({ status: 404, error });
   }
 }
+
 export async function GET() {
   try {
     dbConnect();

@@ -19,17 +19,16 @@ export async function POST(req: Request) {
     admin.password = hashedPassword;
 
     const savedAdmin = await admin.save();
-    return Response.json({ status: 200 , admin:savedAdmin });
+    return Response.json({ status: 200, admin: savedAdmin });
   } catch (e) {
     return Response.json({ status: 404, error: e });
   }
 }
 export async function PUT(req: Request) {
   try {
-        dbConnect()
+    dbConnect();
     const { email, password } = await req.json();
     const admin = await Admin.findOne({ email: email });
-    
 
     if (!admin) {
       return Response.json({ status: 404, message: "User not registered" });
@@ -48,7 +47,7 @@ export async function PUT(req: Request) {
       email: admin.email,
     });
 
-    return Response.json({ admin: admin, status: 200, token:token });
+    return Response.json({ admin: admin, status: 200, token: token });
   } catch (e) {
     console.log(e);
     return Response.json({ status: 404, error: e });
