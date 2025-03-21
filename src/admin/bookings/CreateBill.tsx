@@ -178,6 +178,7 @@ const CreateBill = (props: {
       printWindow.document.write(receiptHtml);
       printWindow.document.close();
       printWindow.print();
+      handleReset()
     } else {
       console.error("Failed to open print window.");
     }
