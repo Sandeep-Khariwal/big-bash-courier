@@ -18,30 +18,44 @@ import Image from "next/image";
 const FindBills = (props: {
   setIsBillComponent: React.Dispatch<SetStateAction<boolean>>;
 }) => {
-  const [billDate, setBillDate] = useState<Date | null>(null);
+  const [fromDate, setFromDate] = useState<Date | null>(null);
+  const [toDate, setToDate] = useState<Date | null>(null);
   const [destination, setDestination] = useState<string>("");
   const [senderName, setSenderName] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [billData, setBillData] = useState<BillData[]>([]);
+  const [totalRevanue,setTotalRevanue] = useState<number>(0)
 
   const getAllBill = async () => {
     setBillData([]);
     setIsLoading(true);
-    let newDate;
-    if (billDate) {
-      newDate = new Date(billDate);
-      newDate.setDate(newDate.getDate() + 1);
+    let newDate1;
+    if (fromDate) {
+      newDate1 = new Date(fromDate);
+      newDate1.setDate(newDate1.getDate() + 1);
     }
+    let newDate2;
+    if (toDate) {
+      newDate2 = new Date(toDate);
+      newDate2.setDate(newDate2.getDate() + 1);
+    }
+
     const response = await axios
       .put(`${URL}/api/bill`, {
         senderName: senderName,
         destination: destination,
-        date: newDate,
+        fromDate: newDate1,
+        toDate: newDate2
       })
       .then((response) => response.data);
 
     if (response.status === 200) {
       setBillData(response.allBills);
+      const revanue = response.allBills.reduce((sum: number, acc: BillData) => {
+        return sum + Number(acc.netAmount);
+      }, 0);
+
+      setTotalRevanue(revanue)
       setIsLoading(false);
     } else {
       setIsLoading(false);
@@ -77,12 +91,22 @@ const FindBills = (props: {
         <DatePickerInput
           w={"20%"}
           c={"gray"}
-          label="Bill Date"
+          label="From Date"
           ff={"Poppins"}
-          placeholder="Select Bill Date"
+          placeholder="Select From Date"
           radius={"md"}
-          value={billDate}
-          onChange={(date) => setBillDate(date)}
+          value={fromDate}
+          onChange={(date) => setFromDate(date)}
+        />
+        <DatePickerInput
+          w={"20%"}
+          c={"gray"}
+          label="To Date"
+          ff={"Poppins"}
+          placeholder="Select To Date"
+          radius={"md"}
+          value={toDate}
+          onChange={(date) => setToDate(date)}
         />
         <TextInput
           placeholder="Enter Destination"
@@ -150,6 +174,10 @@ const FindBills = (props: {
                     <Table.Td>Rs. {bill.netAmount}</Table.Td>
                   </Table.Tr>
                 ))}
+                <Table.Tr>
+                  <Table.Td colSpan={7} ta={"end"} fw={600} fz={18} >Total Revanue</Table.Td>
+                  <Table.Td fw={600} fz={18} >Rs {totalRevanue}</Table.Td>
+                </Table.Tr>
             </Table.Tbody>
           </Table>
         ) : (

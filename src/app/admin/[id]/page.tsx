@@ -99,7 +99,7 @@ const Admin = () => {
       <Toaster />
       <Flex w={"100%"} mih={"100vh"}>
         <Stack
-          w={"10%"}
+          w={"13%"}
           bg={"linear-gradient(to top, #4da6cf, #ec4899)"}
           gap={20}
           pt={20}
@@ -285,7 +285,7 @@ const Admin = () => {
               />
             </Flex>
           </Flex>
-          <Stack>
+          <Stack  mih={"85vh"} style={{ overflowY: "auto", height: "100%" }} py={20} >
             {activeTab === SideTabs.HOME && <HomeSection />}
             {activeTab === SideTabs.BOOKING && <AppBookings />}
             {activeTab === SideTabs.USERS && <AppUsers />}

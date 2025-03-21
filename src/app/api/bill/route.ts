@@ -2,6 +2,12 @@ import dbConnect from "@/app/lib/dbConnect";
 import Bill from "@/app/models/bill.model";
 import { randomUUID } from "crypto";
 
+interface Filter {
+  senderName?: string;
+  destination?: string;
+  date?: { $gte: string; $lte: string };
+}
+
 export async function POST(req: Request) {
   const {
     trackingNumber,
@@ -67,26 +73,44 @@ export async function POST(req: Request) {
 export async function PUT(req: Request) {
   try {
     dbConnect();
-    const data = await req.json();
-    const newDate = data?.date?.toString();
-    const filter = {} as { [key: string]: string };
-
-    if (data.senderName) filter.senderName = data.senderName;
-    if (data.destination) filter.destination = data.destination;
-
-    if (newDate) {
-      filter.date = newDate.split("T")[0];
+  
+    // Parse request data
+    const data = await req.json();  // Assuming you're using `req.json()` for JSON parsing
+  
+    // Extract the necessary fields from request data
+    const { senderName, destination, fromDate, toDate } = data;
+  
+    // Initialize the filter object with the correct type
+    const filter: Filter = {};
+  
+    // Add filter conditions based on provided parameters
+    if (senderName) filter.senderName = senderName;
+    if (destination) filter.destination = destination;
+  
+    // Date filtering logic
+    if (fromDate && toDate) {
+      // Convert fromDate and toDate to Date objects
+      const startDate = new Date(fromDate);
+      const endDate = new Date(toDate);
+  
+      // Add the date range condition to the filter
+      filter.date = {
+        $gte: startDate.toISOString().split('T')[0], // Convert to YYYY-MM-DD format
+        $lte: endDate.toISOString().split('T')[0],   // Convert to YYYY-MM-DD format
+      };
     }
-
+  
+    // Find bills based on the filter
     const allBills = await Bill.find(filter);
-
+  
     if (allBills.length === 0) {
-      return Response.json({ status: 404, message: "Bill not found" });
+      return Response.json({ status: 404, message: 'Bill not found' });
     }
-
+  
     return Response.json({ status: 200, allBills });
   } catch (error) {
-    console.log(error);
-    return Response.json({ status: 404, message: "server error" });
+    console.error(error);
+    return Response.json({ status: 500, message: 'Server error' });
   }
+  
 }

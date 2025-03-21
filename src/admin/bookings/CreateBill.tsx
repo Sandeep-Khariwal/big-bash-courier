@@ -136,7 +136,7 @@ const CreateBill = (props: {
       return;
     }
     if (!formData.goodsDesc) {
-      toast.error("Goods description Required");
+      toast.error("Goods Details Required");
       return;
     }
     if (!formData.pieces) {
@@ -149,6 +149,10 @@ const CreateBill = (props: {
     }
     if (!formData.netAmount) {
       toast.error("Net Amount Required");
+      return;
+    }
+    if (!formData.goodsValue) {
+      toast.error("Declared value Required");
       return;
     }
     setIsLoading(true);
@@ -180,10 +184,10 @@ const CreateBill = (props: {
   };
 
   return (
-    <Stack w={"90%"} h={"85vh"} mx={"auto"}>
+    <Stack w={"90%"} h={"100%"} mx={"auto"} pb={20} >
       <Toaster />
       <LoadingOverlay visible={isLoading} />
-      <Stack w={"100%"} mih={"100vh"} p={20}>
+      <Stack w={"100%"} h={"100%"}  >
         <Flex w={"100%"} align={"start"} justify={"space-between"}>
           <Text ml={20} fz={24} ff={"poppins"} c={"#696880"}>
             Create Bill
