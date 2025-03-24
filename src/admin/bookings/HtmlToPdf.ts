@@ -78,11 +78,8 @@ export const createBill = (data: BillData) => {
           style="
             width: 33%;
             border: 1px solid #ec4899;
-            display: flex;
-            flex-direction: column;
-            align-items: start;
-            justify-content: start;
             padding-left: 10px;
+            gap: 1px;
           "
         >
           <p
@@ -90,7 +87,7 @@ export const createBill = (data: BillData) => {
               font-weight: 600;
               font-size: 20px;
               color: #ec4899;
-              // margin-bottom: 10px;
+              margin-top: 1px;
             "
           >
             Big Bash Courier service
@@ -100,15 +97,16 @@ export const createBill = (data: BillData) => {
               font-weight: 600;
               font-size: 16px;
               color: rgb(62, 61, 61);
-              margin: 0px;
+              margin-top: 0px;
             "
           >
-            Band Fatak Street, <br/>
-            Opp. Mahadev Mandir, <br/>
-            Railway Road, <br/>
-            Bathinda (Punjab)
+          Band Fatak Street, <br/>
+          Opp. Mahadev Mandir, <br/>
+          Railway Road, <br/>
+          Bathinda (Punjab) <br/>
+          81680-76003,
+          70826-85525
           </p>
-         
         </div>
         <div
           style="
