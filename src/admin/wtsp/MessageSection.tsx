@@ -48,6 +48,8 @@ const MessageSection = () => {
     if (response.status === 200) {
       setAllClients(response.contacts);
       setIsLoading(false);
+      setClientName("")
+      setClientNumber("")
     } else {
       toast.error("server issue!!");
       console.log(response);

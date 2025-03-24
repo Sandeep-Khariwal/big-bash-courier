@@ -90,7 +90,7 @@ export const createBill = (data: BillData) => {
               font-weight: 600;
               font-size: 20px;
               color: #ec4899;
-              margin-bottom: 10px;
+              // margin-bottom: 10px;
             "
           >
             Big Bash Courier service
@@ -103,18 +103,12 @@ export const createBill = (data: BillData) => {
               margin: 0px;
             "
           >
-            MC market, sirsa, haryana
+            Band Fatak Street, <br/>
+            Opp. Mahadev Mandir, <br/>
+            Railway Road, <br/>
+            Bathinda (Punjab)
           </p>
-          <p
-            style="
-              font-weight: 600;
-              font-size: 16px;
-              color: rgb(62, 61, 61);
-              margin: 2px;
-            "
-          >
-            125055
-          </p>
+         
         </div>
         <div
           style="
