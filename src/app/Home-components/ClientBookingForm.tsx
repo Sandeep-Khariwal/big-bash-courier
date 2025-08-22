@@ -51,6 +51,7 @@ const ClientBookingForm = () => {
 
   // Handle form submission
   const handleSubmit = () => {
+    return;
     bookParcel()
   };
 

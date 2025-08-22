@@ -99,6 +99,7 @@ const CreateBill = (props: {
   };
 
   const saveBill = async () => {
+    return;
     if (!formData.trackingNumber) {
       toast.error("Tracking Number Required");
       return;
@@ -501,7 +502,7 @@ const CreateBill = (props: {
         <Divider c={"gray"} />
         <Flex w={"100%"} align={"center"} justify={"center"} gap={10}>
           <Button variant="outline" 
-          // onClick={saveBill}
+          onClick={saveBill}
           >
             Print
           </Button>
