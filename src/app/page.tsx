@@ -17,10 +17,12 @@ import { setUserData } from "@/lib/user/UserSlice";
 import { setAdminData } from "@/lib/admin/AdminSlice";
 import { URL } from "@/lib/ApiHelper";
 import ClientBookingForm from "./Home-components/ClientBookingForm";
+// import Hero from "./Home-components/calculator/Hero";
 
 export default function Home() {
   const dispatch = useAppDispatch();
   const navigation = useRouter();
+  
   useEffect(() => {
     getUserByToken();
   }, []);

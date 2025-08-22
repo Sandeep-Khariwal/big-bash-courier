@@ -52,6 +52,8 @@ const Hero = (props: { isTopMargin: boolean }) => {
         .then((response) => response.data);
 
       if (response.status === 200) {
+        console.log("response : ", response);
+        
         setIsLoading(false);
         const countries =
           response.countries.map(

@@ -500,7 +500,9 @@ const CreateBill = (props: {
         </Flex>
         <Divider c={"gray"} />
         <Flex w={"100%"} align={"center"} justify={"center"} gap={10}>
-          <Button variant="outline" onClick={saveBill}>
+          <Button variant="outline" 
+          // onClick={saveBill}
+          >
             Print
           </Button>
           <Button variant="outline" onClick={handleReset}>
